@@ -68,9 +68,12 @@ export default function Detail({ params }: { params: { id: string } }) {
           <div style={{ width: `${((order.product_detail?.order_count + orderAmount) / order.product_detail?.max_order) * 100}%` }} className="absolute top-0 left-0 h-full bg-blue-300 transition-all duration-300"></div>
           <div style={{ width: `${(order.product_detail?.order_count / order.product_detail?.max_order) * 100}%` }} className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"></div>
         </div>
-        <h3 className="text-2xl mt-1">Price: <span className="font-bold">{formatIDR(order.total_price)}</span></h3>
-        <div className="">
-          <span className="px-4 py-2 whitespace-nowrap bg-green-700 text-white font-cambria text-lg rounded-full shadow-lg">
+        <div className="flex justify-between items-center">
+          <h2>{order.product_detail?.variations[0].amount} item(s) ordered</h2>
+          <h3 className="text-2xl">Price: <span className="font-bold">{formatIDR(order.total_price)}</span></h3>
+        </div>
+        <div className="my-4">
+          <span className={`px-4 py-2 whitespace-nowrap font-cambria text-lg rounded-full shadow-lg ${order.state == 'Cancelled by buyer' ? 'bg-gray-300 text-gray-700' : 'bg-green-700 text-white'}`}>
             {order.state}
           </span>
         </div>
