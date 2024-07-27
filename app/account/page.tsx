@@ -1,5 +1,6 @@
 "use client";
 
+import UserIcon from "@/components/icon/UserIcon";
 import { useAlert } from "@/components/ui/AlertProvider";
 import { useAuth } from "@/components/ui/AuthProvider";
 import { Button } from "@/components/ui/Button";
@@ -10,7 +11,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function AccountPage() {
-  const { user } = useAuth();
+  const { appUser } = useAuth();
   const router = useRouter();
   const { showAlert } = useAlert();
 
@@ -30,10 +31,15 @@ export default function AccountPage() {
 
   return (
     <div>
-      <div className="flex flex-col px-4 pl-8 pt-10">
-        <h2 className="text-2xl font-bold">Name</h2>
-        <p className="text-secondary">Email</p>
-        <p className="text-xl font-bold">+62 1234 5678</p>
+      <div className="flex flex-col px-4 pl-8 pt-10 text-center">
+        <div className="mx-auto mb-8">
+          <div className="w-20 h-20 border rounded-full flex justify-center items-center">
+            <span className="text-4xl">{(appUser?.username || 'Guest')[0]}</span>
+          </div>
+        </div>
+        <h2 className="text-2xl font-bold">{appUser?.username || 'Guest'}</h2>
+        <p className="text-secondary">{appUser?.email || 'Email'}</p>
+        <p className="text-xl font-bold mt-4">{appUser?.phone_number || '+62 812 3456 789'}</p>
       </div>
       <div className="flex flex-col items-center justify-center">
         <div className="mt-20">

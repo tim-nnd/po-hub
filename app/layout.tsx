@@ -17,12 +17,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="max-w-[500px] relative mx-auto min-h-screen">
+      <body className="max-w-[500px] relative mx-auto">
         <AuthProvider>
           <AlertProvider>
-            <div>{children}</div>
-            <BottomNavBar />
+            <div className="h-screen mb-16">{children}</div>
             <AlertContainer />
+            <BottomNavBar />
           </AlertProvider>
         </AuthProvider>
       </body>
