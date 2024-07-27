@@ -12,3 +12,15 @@ export const createProduct = async (product: IProduct) => {
     await dbConnect();
     return await Product.create(product)
 }
+
+export const cancelProduct = async (productId: string, sellerId: string) => {
+    await dbConnect();
+    return await Product.updateOne({
+        _id: productId,
+        seller_id: sellerId,
+    }, {
+        $set: {
+            state: 'CANCELLED'
+        }
+    })
+}
