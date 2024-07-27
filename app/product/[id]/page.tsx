@@ -119,7 +119,7 @@ export default function Detail({ params }: { params: { id: string } }) {
         />
         <h3 className="text-2xl mt-1">Price: <span className="font-bold">{formatIDR(price)}</span></h3>
         <form onSubmit={handleSubmit}>
-          <div className="flex items-center mb-4">
+          <div className="flex items-center mb-8">
             <p>{formatIDR(totalPrice)}</p>
             <div className='ml-auto'>
               <Button type='button' rounded="left" className="py-2 px-4" onClick={stepDown}>-</Button>
@@ -127,7 +127,7 @@ export default function Detail({ params }: { params: { id: string } }) {
               <Button type='button' rounded="right" className="py-2 px-4" onClick={stepUp}>+</Button>
             </div>
           </div>
-          <Button variant="primary" className="py-3">
+          <Button variant="primary" className="py-3 w-full">
             Order
           </Button>
         </form>
