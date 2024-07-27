@@ -102,7 +102,7 @@ export default function Detail({ params }: { params: { id: string } }) {
         }]
       });
       const data = await res.data;
-      showAlert('Order success');
+      showAlert('Order success ✅');
       setTimeout(() => router.push('/'), 1500);
     } catch (error) {
       showAlert('Order failed');
