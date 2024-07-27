@@ -58,7 +58,7 @@ export default async function handler(req: any, res: any) {
         return res.status(404).json({ message: 'Products not found' });
       }
   
-      return res.status(200).json(products);
+      return res.status(200).json({products});
     } catch (error) {
       return res.status(401).json({ message: 'Invalid token' });
     }
