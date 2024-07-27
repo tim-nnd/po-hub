@@ -8,13 +8,15 @@ import { getFirebaseAdminApp } from "@/lib/getFirebaseAdminApp";
 const postSyncUser = async (userId: string, email: string | undefined) => {
   await dbConnect();
   const user = await User.findOne({ _id: userId }).lean();
-  if (user) return;
+  if (user) return user;
 
   try {
-    await User.create({
+    const newUser = {
       _id: userId,
       email: email,
-    });
+    };
+    await User.create(newUser);
+    return newUser;
   } catch (error) {
     console.error(error);
   }
@@ -39,8 +41,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         throw new Error("Invalid Token")
       }
 
-      await postSyncUser(idToken.uid, idToken.email);
-      res.status(200).json({ success: true, user: idToken })
+      const user = await postSyncUser(idToken.uid, idToken.email);
+      res.status(200).json({ success: true, user: user })
     } catch (error) {
       console.log(error)
       res.status(400).json({ success: false })

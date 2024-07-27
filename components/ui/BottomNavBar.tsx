@@ -6,19 +6,22 @@ import ShoppingBagIcon from "../icon/ShoppingBagIcon";
 import EnvelopeIcon from "../icon/EnvelopeIcon";
 import UserIcon from "../icon/UserIcon";
 import { useAuth } from "./AuthProvider";
+import { useEffect, useState } from "react";
 
 export default function BottomNavBar() {
   const { appUser } = useAuth();
+  const [accountLink, setAccountLink] = useState("/sing-in");
 
-  const getAccountLink = () => {
+  useEffect(() => {
     if (!appUser) {
-      return '/sign-in'
+      setAccountLink('/sign-in')
     } else if (!appUser.phone_number) {
-      return '/sign-in/phone'
+      setAccountLink('/sign-in/phone')
+    } else {
+      setAccountLink('/account')
     }
 
-    return '/account'
-  }
+  }, [appUser])
 
   return (
     <>
@@ -48,7 +51,7 @@ export default function BottomNavBar() {
           <span className="text-xs font-medium">Inbox</span>
         </Link>
         <Link
-          href={getAccountLink()}
+          href={accountLink}
           className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"
           prefetch={false}
         >

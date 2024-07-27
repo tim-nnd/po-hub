@@ -4,13 +4,14 @@ import ChromeIcon from "@/components/icon/ChromeIcon";
 import { useAlert } from "@/components/ui/AlertProvider";
 import { useAuth } from "@/components/ui/AuthProvider";
 import { Button } from "@/components/ui/Button";
+import { IUser } from "@/model/User";
 import axios from "axios";
 import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 export default function SignInPage() {
-  const { user, setUser } = useAuth();
+  const { setAppUser } = useAuth();
   const { showAlert } = useAlert();
   const router = useRouter();
 
@@ -19,11 +20,15 @@ export default function SignInPage() {
       const result = await signInWithPopup(getAuth(), new GoogleAuthProvider());
       if (!result) return;
 
-      let user: User = await syncUser();
-      setUser(user);
+      let user: IUser = await syncUser();
+      setAppUser(user);
 
       showAlert(`Authenticated as ${user.email}`);
-      setTimeout(() => router.push('/'), 1500);
+      if (!user.phone_number) {
+        setTimeout(() => router.push('/sign-in/phone'), 1500);
+      } else {
+        setTimeout(() => router.push('/'), 1500);
+      }
     } catch (error: any) {
       const errorMessage = error.message;
       showAlert(errorMessage);

@@ -8,11 +8,12 @@ import useInterval from "@/hooks/useInterval";
 import { IUser } from "@/model/User";
 import axios from "axios";
 
-const AuthContext = createContext<{ user: User | null, setUser: any, triggerUpdateUser: any, appUser: IUser | null }>({
+const AuthContext = createContext<{ user: User | null, setUser: any, triggerUpdateUser: any, appUser: IUser | null, setAppUser: any }>({
   user: null,
   setUser: null,
   triggerUpdateUser: null,
-  appUser: null
+  appUser: null,
+  setAppUser: null
 });
 
 export function AuthProvider({ children }: any) {
@@ -29,6 +30,7 @@ export function AuthProvider({ children }: any) {
     return getAuth().onIdTokenChanged(async (user) => {
       if (!user) {
         setUser(null);
+        setAppUser(null);
         nookies.set(undefined, 'token', '', { path: '/' });
       } else {
         const token = await user.getIdToken();
@@ -48,7 +50,7 @@ export function AuthProvider({ children }: any) {
   }, 10 * 60 * 1000);
 
   return (
-    <AuthContext.Provider value={useMemo(() => ({ user, setUser, triggerUpdateUser, appUser }), [user, setUser, triggerUpdateUser, appUser])}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={useMemo(() => ({ user, setUser, triggerUpdateUser, appUser, setAppUser }), [user, setUser, triggerUpdateUser, appUser, setAppUser])}>{children}</AuthContext.Provider>
   )
 }
 
