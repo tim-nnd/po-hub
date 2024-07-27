@@ -5,7 +5,7 @@ interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary';
 }
 
-export const Button: React.FC<ButtonProps> = ({ variant = 'solid', className, children, ...props }) => {
+export const Button: React.FC<ButtonProps> = ({ variant = 'primary', className, children, ...props }) => {
   return (
     <button
       className={classNames(
