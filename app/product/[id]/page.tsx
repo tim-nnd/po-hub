@@ -102,7 +102,7 @@ export default function Detail({ params }: { params: { id: string } }) {
         <p className="text-2xl font-bold">{product.order_count} orders</p>
         <p className="text-secondary">{text}</p>
         <ProgressBar 
-          className="h-2"
+          className="h-3"
           min={product.min_order}
           max={product.max_order}
           currentValue={product.order_count}
@@ -113,9 +113,9 @@ export default function Detail({ params }: { params: { id: string } }) {
           <div className="flex items-center mb-4">
             <p>{formatIDR(totalPrice)}</p>
             <div className='ml-auto'>
-              <button type="button" className="py-2 px-4 text-white bg-blue-900 rounded-l-lg hover:bg-blue-700" onClick={stepDown}>-</button>
-              <input type="number" id="donationAmount" className="text-center w-16 py-2 border-t border-b border-gray-300" value={orderAmount} />
-              <button type="button" className="py-2 px-4 text-white bg-blue-900 rounded-r-lg hover:bg-blue-700" onClick={stepUp}>+</button>
+              <Button type='button' rounded="left" className="py-2 px-4" onClick={stepDown}>-</Button>
+              <input type="number" className="text-center w-16 py-2 border-0" value={orderAmount} />
+              <Button type='button' rounded="right" className="py-2 px-4" onClick={stepUp}>+</Button>
             </div>
           </div>
           <Button variant="primary" className="py-3">
