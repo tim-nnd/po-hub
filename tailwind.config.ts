@@ -14,6 +14,17 @@ const config: Config = {
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
     },
+    keyframes: {
+      rise: {
+        '0%': { transform: 'translateY(100%)' },
+        '10%': { transform: 'translateY(0%)' },
+        '90%': { opacity: '100%', transform: 'scale(1)' },
+        '100%': { opacity: '0%', transform: 'scale(1.1)' }
+      }
+    },
+    animation: {
+      rise: 'rise 1.5s forwards'
+    }
   },
   plugins: [],
 };

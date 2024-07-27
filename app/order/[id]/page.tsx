@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/Button";
 import { GetOrderDetailResponse } from '@/model/spec/GetOrderDetailResponse';
+import SpinnerIcon from '@/components/icon/SpinnerIcon';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [orderAmount, setOrderAmount] = useState(0);
@@ -10,11 +11,13 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [order, setOrder] = useState<GetOrderDetailResponse | null>(null);
   const [price, setPrice] = useState(0);
   const [text, setText] = useState("");
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchOrder = async () => {
       const res = await fetch(`/api/orders?order_id=${params.id}`);
       const data = await res.json();
+      setLoading(false);
       setOrder(data);
       // setPrice(data.variations[0].price);
     }
@@ -44,7 +47,9 @@ export default function Detail({ params }: { params: { id: string } }) {
   }, [order]);
 
   if (!order) {
-    return <div>Not found</div>;
+    return <main className="p-4">
+      <SpinnerIcon />
+    </main>;
   }
 
   // TODO: not implemented yet

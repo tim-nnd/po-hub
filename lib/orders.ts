@@ -59,18 +59,18 @@ export const getOrderCountByProductId = async (productId: string) => {
 export const getOrdersByUserId = async (userId: string) => {
   await dbConnect();
   return await Order.find({
-      buyer_id: userId,
-  }).lean();
+    buyer_id: userId,
+  }).sort({ created_at: -1 }).lean();
 }
 
 export const cancelOrder = async (orderId: string, buyerId: string) => {
   await dbConnect();
   return await Order.updateOne({
-      _id: orderId,
-      buyer_id: buyerId,
+    _id: orderId,
+    buyer_id: buyerId,
   }, {
-      $set: {
-          state: 'CANCELLED'
-      }
+    $set: {
+      state: 'CANCELLED'
+    }
   })
 }
