@@ -1,5 +1,4 @@
 import React from 'react';
-import Image from "next/image";
 import classNames from 'classnames';
 
 interface HomeListItemProps {
@@ -13,7 +12,7 @@ interface HomeListItemProps {
 export const HomeListItem: React.FC<HomeListItemProps> = ({ title = 'Title', subtitle = 'lorem ipsum dolor sit amet', progress = '0', image, className, ...props }) => {
   return (
     <div 
-      className={classNames('p-4', className)}
+      className={classNames('my-4', className)}
       {...props}
     >
       <div className="flex items-start">

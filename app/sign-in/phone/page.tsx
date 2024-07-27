@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/Button";
 
-export default function Component() {
+export default function Page() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4 rounded-lg">
         <h1 className="mb-8 text-3xl font-bold">PreOrdr</h1>

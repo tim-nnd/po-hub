@@ -5,8 +5,8 @@
 :root {
   --foreground-rgb: 0, 0, 0;
   --foreground-secondary-rgb: 75, 85, 99;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  --background-main-rgb: 255, 255, 255;
+  --background-side-rgb: 214, 219, 220;
 
   --button-primary-background-rgb: 0, 0, 0;
   --button-primary-foreground-rgb: 255, 255, 255;
@@ -27,8 +27,8 @@
   :root {
     --foreground-rgb: 255, 255, 255;
     --foreground-secondary-rgb: 156, 163, 175;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --background-main-rgb: 0, 0, 0;
+    --background-side-rgb: 24, 24, 24;
 
     --button-primary-background-rgb: 255, 255, 255;
     --button-primary-foreground-rgb: 0, 0, 0;
@@ -46,14 +46,19 @@
   }
 }
 
+html {
+  background-color: rgb(var(--background-side-rgb));
+}
+
 body {
   color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  background: rgb(var(--background-main-rgb));
+    
+}
+
+nav {
+  color: rgb(var(--foreground-rgb));
+  background: rgb(var(--background-main-rgb));
 }
 
 .text-secondary {
@@ -97,6 +102,16 @@ input:focus {
 
 input:hover {
   border-color: rgb(var(--input-hover-border-rgb));
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 @layer utilities {
