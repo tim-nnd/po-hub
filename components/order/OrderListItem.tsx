@@ -19,13 +19,12 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ id = '', title = '
         {...props}
       >
         <div className="flex items-start">
-          <img
+        <img
             src={image}
             alt="Image"
-            className='w-28 h-28'
-            style={{ objectFit: 'cover' }}
+            className='w-1/3 object-cover bg-center bg-no-repeat bg-fill h-48'
           />
-          <div className="flex-1 ml-3">
+          <div className="flex-1 pl-3 w-2/3">
             <h1 className="font-bold text-xl">{title}</h1>
             <p className="mb-2 text-m">{subtitle}</p>
             <div className="relative pt-1">
