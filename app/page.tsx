@@ -7,7 +7,7 @@ export default function Home() {
   const { user } = useAuth();
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <main className="flex min-h-screen flex-col items-center justify-between px-4">
       <div className = "w-full">
         <HomeListItem
           title = 'Mie'
@@ -26,7 +26,37 @@ export default function Home() {
           subtitle = 'lorem ipsum dolor sit amet'
           progress = {70}
           image = '/chikapu.jpg'
-      />
+        />
+        <HomeListItem
+          title = 'Ayam'
+          subtitle = 'lorem ipsum dolor sit amet'
+          progress = {20}
+          image = '/chikapu.jpg'
+        />
+        <HomeListItem
+          title = 'Ayam'
+          subtitle = 'lorem ipsum dolor sit amet'
+          progress = {20}
+          image = '/chikapu.jpg'
+        />
+        <HomeListItem
+          title = 'Ayam'
+          subtitle = 'lorem ipsum dolor sit amet'
+          progress = {20}
+          image = '/chikapu.jpg'
+        />
+        <HomeListItem
+          title = 'Ayam'
+          subtitle = 'lorem ipsum dolor sit amet'
+          progress = {20}
+          image = '/chikapu.jpg'
+        />
+        <HomeListItem
+          title = 'Ayam'
+          subtitle = 'lorem ipsum dolor sit amet'
+          progress = {20}
+          image = '/chikapu.jpg'
+        />
       </div>
     </main>
   );

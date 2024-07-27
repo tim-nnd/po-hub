@@ -25,7 +25,7 @@ export default function BottomNavBar() {
 
   return (
     <>
-      <nav className="absolute bottom-0 left-0 right-0 z-50 flex h-14 w-full items-center justify-around bg-background shadow-t">
+      <nav className="sticky bottom-0 z-50 flex h-14 max-w-[500px] items-center justify-around shadow-t">
         <Link
           href="/"
           className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"
