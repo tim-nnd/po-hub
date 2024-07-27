@@ -6,6 +6,14 @@ import CreateProductRequest from '@/model/spec/CreateProductRequest';
 import { GetProductResponse, ProductVariation } from '@/model/spec/GetProductDetailResponse';
 import { nanoid } from 'nanoid';
 
+export const config = {
+  api: {
+      bodyParser: {
+          sizeLimit: '5mb'
+      }
+  }
+}
+
 export default async function handler(req: any, res: any) {
   const { method } = req;
 

@@ -6,6 +6,8 @@ import { GetProductResponse } from '@/model/spec/GetProductDetailResponse';
 import { useAlert } from '@/components/ui/AlertProvider';
 import { useRouter } from 'next/navigation';
 import { ProgressBar } from '@/components/ui/ProgressBar';
+import SpinnerIcon from '@/components/icon/SpinnerIcon';
+import axios from 'axios';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [orderAmount, setOrderAmount] = useState(0);
@@ -13,16 +15,23 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<GetProductResponse | null>(null);
   const [price, setPrice] = useState(0);
   const [text, setText] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const { showAlert } = useAlert();
   const router = useRouter();
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await fetch(`/api/products?product_id=${params.id}`);
-      const data = await res.json();
-      setProduct(data);
-      setPrice(data.variations[0].price);
+      try {
+        const res = await axios.get(`/api/products?product_id=${params.id}`);
+        const data = await res.data;
+        setProduct(data);
+        setLoading(false);
+        setPrice(data.variations[0].price);
+      } catch (error) {
+        setLoading(false);
+        showAlert('Failed to fetch product');
+      }
     }
 
     fetchProduct();
@@ -64,34 +73,34 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!product || orderAmount <= 0) return;
+    if (!product) return;
 
-    const res = await fetch(`/api/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    if (orderAmount <= 0) {
+      showAlert('Order amount must be greater than 0');
+      return;
+    }
+
+    try {
+      const res = await axios.post(`/api/orders`, {
         product_id: product.id,
         variations: [{
           variation_id: product.variations[0].variation_id,
           amount: orderAmount
         }]
-      })
-    });
-    const data = await res.json();
-    if (res.ok) {
+      });
+      const data = await res.data;
       showAlert('Order success');
-      setTimeout(() => {
-        router.push('/');
-      }, 1500);
-    } else {
-      showAlert(data.message);
+      setTimeout(() => router.push('/'), 1500);
+    } catch (error) {
+      showAlert('Order failed');
     }
+
   }
 
   if (!product) {
-    return <div></div>;
+    return <main className="p-4">
+      <SpinnerIcon />
+    </main>;
   }
 
   return (
@@ -124,7 +133,7 @@ export default function Detail({ params }: { params: { id: string } }) {
         </form>
         <section className="mt-10">
           <h3 className="text-2xl font-bold mb-4">About the PreOrder</h3>
-          <p className="text-lg mb-4">{product.description}</p>
+          <p className="text-lg mb-4 whitespace-pre-line">{product.description}</p>
         </section>
       </div>
     </div>

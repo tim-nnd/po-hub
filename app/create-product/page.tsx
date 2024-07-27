@@ -52,7 +52,7 @@ export default function CreateProductPage() {
     const variations = [{
       name: form.name,
       price: form.variationPrice,
-      image_url: form.variationImageUrl
+      image_url: form.image_url
     }];
 
     const newForm = {
@@ -70,10 +70,10 @@ export default function CreateProductPage() {
     try {
       await axios.post(`/api/products`, newForm);
       showAlert('Product created successfully!');
+      setLoading(false);
       setTimeout(() => router.push('/'), 1500);
     } catch (exception) {
       showAlert('Failed to create product.');
-    } finally {
       setLoading(false);
     }
   }
@@ -89,6 +89,21 @@ export default function CreateProductPage() {
       <div className="w-full max-w-md">
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
+            <label htmlFor="image_url" className="block mb-1 text-sm font-medium text-secondary">
+              Image
+            </label>
+            <input
+              type="file"
+              id="image_url"
+              name="image_url"
+              placeholder="Image URL"
+              className="w-full px-3 py-2 rounded-md"
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="mb-2">
             <label htmlFor="name" className="block mb-1 text-sm font-medium text-secondary">
               Name
             </label>
@@ -100,6 +115,7 @@ export default function CreateProductPage() {
               className="w-full px-3 py-2 rounded-md"
               value={form.name}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -111,23 +127,10 @@ export default function CreateProductPage() {
               id="description"
               name="description"
               placeholder="Description"
-              className="w-full px-3 py-2 rounded-md"
+              className="w-full px-3 py-2 rounded-md h-56 resize-none"
               value={form.description}
               onChange={handleChange}
-            />
-          </div>
-
-          <div className="mb-2">
-            <label htmlFor="image_url" className="block mb-1 text-sm font-medium text-secondary">
-              Image URL
-            </label>
-            <input
-              type="file"
-              id="image_url"
-              name="image_url"
-              placeholder="Image URL"
-              className="w-full px-3 py-2 rounded-md"
-              onChange={handleChange}
+              required
             />
           </div>
 
@@ -143,6 +146,7 @@ export default function CreateProductPage() {
               className="w-full px-3 py-2 rounded-md"
               value={form.closed_at}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -158,6 +162,7 @@ export default function CreateProductPage() {
               className="w-full px-3 py-2 rounded-md"
               value={form.available_at}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -173,6 +178,7 @@ export default function CreateProductPage() {
               className="w-full px-3 py-2 rounded-md"
               value={form.min_order}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -188,6 +194,7 @@ export default function CreateProductPage() {
               className="w-full px-3 py-2 rounded-md"
               value={form.max_order}
               onChange={handleChange}
+              required
             />
           </div>
 
@@ -195,31 +202,21 @@ export default function CreateProductPage() {
             <label htmlFor="variationPrice" className="block mb-1 text-sm font-medium text-secondary">
               Price
             </label>
-            <input
-              type="number"
-              id="variationPrice"
-              name="variationPrice"
-              placeholder="Price"
-              className="w-full px-3 py-2 rounded-md"
-              value={form.variationPrice}
-              onChange={handleChange}
-            />
+            <div className="flex items-center">
+              <span className="mr-4">Rp. </span>
+              <input
+                type="number"
+                id="variationPrice"
+                name="variationPrice"
+                placeholder="10000"
+                className="w-full px-3 py-2 rounded-md"
+                value={form.variationPrice}
+                onChange={handleChange}
+                required
+              />
+            </div>
           </div>
-
-          <div className="mb-2">
-            <label htmlFor="variationImageUrl" className="block mb-1 text-sm font-medium text-secondary">
-              Image URL
-            </label>
-            <input
-              type="file"
-              id="variationImageUrl"
-              name="variationImageUrl"
-              placeholder="Image URL"
-              className="w-full px-3 py-2 rounded-md"
-              onChange={handleChange}
-            />
-          </div>
-          <Button variant="primary" className="w-full px-4 py-2">
+          <Button variant="primary" className="w-full px-4 py-2 mt-16">
             Create Product
           </Button>
         </form>

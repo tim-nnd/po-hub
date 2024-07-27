@@ -99,13 +99,14 @@ nav {
   background-color: rgb(var(--button-hover-secondary-background-rgb));
 }
 
-input {
+input, textarea {
   background-color: rgb(var(--input-bg-rgb));
   color: rgb(var(--input-text-rgb));
   border: 1px solid;
   border-color: rgb(var(--input-border-rgb));
   transition: border-color 0.3s;
 }
+
 
 input:focus {
   border-color: rgb(var(--input-focus-border-rgb));
