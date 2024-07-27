@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/components/ui/AuthProvider";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import axios from "axios";
 import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { useCallback } from "react";
