@@ -15,6 +15,7 @@ export interface IProductDetail {
   name: string,
   description: string,
   image_url: string,
+  total_price: number,
   state: string,
   closed_at: string,
   available_at: string,
