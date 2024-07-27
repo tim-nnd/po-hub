@@ -20,7 +20,7 @@ export const cancelProduct = async (productId: string, sellerId: string) => {
         seller_id: sellerId,
     }, {
         $set: {
-            state: 'CANCELLED_BY_SELLER'
+            state: 'CANCELLED'
         }
     })
 }
