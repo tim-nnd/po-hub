@@ -1,4 +1,4 @@
-import { Schema, SchemaTypes } from 'mongoose';
+import { Schema, SchemaType, SchemaTypes } from 'mongoose';
 
 const OrderSchema = new Schema({
   _id: String,
@@ -7,7 +7,7 @@ const OrderSchema = new Schema({
   state: String,
   min_order: Number,
   max_order: Number,
-  details: SchemaTypes.Array,
+  product_detail: Object,
   deleted_at: String,
 }, {
   timestamps: {

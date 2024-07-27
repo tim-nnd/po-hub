@@ -1,7 +1,11 @@
-import dbConnect from "@/lib/dbConnect";
+"use client";
+
+import { useAuth } from "@/components/ui/AuthProvider";
 import { HomeListItem } from "@/components/home/HomeListItem";
 
 export default function Home() {
+  const { user } = useAuth();
+
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
       <div className = "w-full">

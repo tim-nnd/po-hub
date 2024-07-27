@@ -1,5 +1,5 @@
-// pages/api/users/me.js
 import dbConnect from "@/lib/dbConnect";
+import getUserById from "@/lib/user";
 import { IProduct, Product } from "@/model/Product";
 import { IUser, User } from "@/model/User";
 
@@ -10,14 +10,6 @@ const getProductsByUserId = async (userId: string) => {
         seller_id: userId,
     }).lean();
 }
-
-const getUserById = async (userId: string) => {
-    await dbConnect();
-    return await User.findOne({
-        _id: userId
-    }).lean();
-}
-
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
