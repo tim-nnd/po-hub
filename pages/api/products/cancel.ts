@@ -1,5 +1,5 @@
 import { createNotification } from "@/lib/notifications";
-import { cancelOrders, getOrdersByProductId } from "@/lib/orders";
+import { cancelOrdersByProductId, getOrdersByProductId } from "@/lib/orders";
 import { cancelProduct } from "@/lib/products";
 import { getUserUidFromCookies } from "@/lib/users";
 import { INotification } from "@/model/Notification";
@@ -16,19 +16,19 @@ export default async function handler(req: any, res: any) {
     return res.status(500).json({ message: 'Internal error' });
   }
 
-  const { productId } = req.query; 
+  const { product_id } = req.query; 
 
-  cancelProduct(productId, userId)
+  cancelProduct(product_id, userId)
   .then(cancelledProduct => {
     if (!cancelledProduct) {
       return res.status(404).json({ message: 'Product not found!' })
     }
 
     // CANCEL ALL ORDERS
-    cancelOrders(productId, "CANCELLED_BY_SELLER")
+    cancelOrdersByProductId(product_id, "CANCELLED_BY_SELLER")
     .then(async (result) => {
       if (result.modifiedCount > 0 ) {
-        const cancelledOrders: IOrder[] | null = await getOrdersByProductId(productId)
+        const cancelledOrders: IOrder[] | null = await getOrdersByProductId(product_id)
         if (cancelledOrders && cancelledOrders.length > 0) {
           cancelledOrders.map(cancelledOrder => {
             const notif = {
@@ -45,7 +45,7 @@ export default async function handler(req: any, res: any) {
         }
       }
 
-      return res.status(201).json({ message: 'success cancelling order' })
+      return res.status(201).json({ message: 'success cancelling product' })
     })
     .catch(error => {
       console.error(error)
