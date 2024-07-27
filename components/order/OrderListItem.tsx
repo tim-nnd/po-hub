@@ -25,7 +25,7 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ id = '', title = '
         <img
             src={image}
             alt="Image"
-            className='w-1/3 object-cover bg-center bg-no-repeat bg-fill h-48'
+            className='w-1/3 object-cover bg-center bg-no-repeat bg-fill h-48 rounded'
           />
           <div className="flex-1 pl-3 w-2/3">
             <h1 className="font-bold text-xl">{title}</h1>
@@ -33,7 +33,7 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ id = '', title = '
             <div className="relative pt-1">
               <div className="flex mb-2 items-center justify-between">
                 <div>
-                  <span className="text-xs font-semibold inline-block py-1 px-2 grid place-items-center bg-blue-200 text-blue-600 rounded-full">
+                  <span className="tag text-xs font-semibold inline-block py-1 px-2 grid place-items-center rounded-full">
                     {currentValue}/{min} targeted
                   </span>
                 </div>

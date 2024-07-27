@@ -45,7 +45,7 @@ export default function SignInPhonePage() {
       <h1 className="mb-8 text-3xl font-bold">PreOrdr</h1>
       <div className="text-center">
         <h2 className="mb-2 text-xl font-bold">
-          Hi, <span className="text-secondary">{!!form.username ? form.username : `<username>`}</span>!
+          Hi, <span className="text-secondary">{!!form.username ? form.username : ``}</span>!
         </h2>
         <p className="mb-8">We will need the following information for you to use our app</p>
       </div>
@@ -59,8 +59,8 @@ export default function SignInPhonePage() {
               type="text"
               id="username"
               name="username"
-              placeholder="Username"
-              className="w-full px-3 py-2 rounded-md"
+              placeholder="Your name here"
+              className="w-full px-3 py-2 rounded-md mb-4"
               value={form.username}
               onChange={handleChange}
             />
@@ -71,7 +71,7 @@ export default function SignInPhonePage() {
               type="tel"
               id="phone_number"
               name="phone_number"
-              placeholder="+62 8785670921"
+              placeholder="ex: +62 8785670921"
               className="w-full px-3 py-2 rounded-md"
               value={form.phone_number}
               onChange={handleChange}
