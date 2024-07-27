@@ -33,7 +33,7 @@ export default async function handler(req: any, res: any) {
     if (!products) {
       return res.status(404).json({ message: 'Products not found' });
     }
-
+    
     const productsResponse = products.map(async product => {
 
         const seller: IUser | null = await getUserById(product.seller_id)
@@ -56,7 +56,8 @@ export default async function handler(req: any, res: any) {
         }
       });
 
-    return res.status(200).json(productsResponse);
+    const resp = await Promise.all(productsResponse);
+    return res.status(200).json(resp);
 
   } catch (error) {
 
