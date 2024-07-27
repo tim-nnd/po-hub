@@ -20,10 +20,15 @@ const config: Config = {
         '10%': { transform: 'translateY(0%)' },
         '90%': { opacity: '100%', transform: 'scale(1)' },
         '100%': { opacity: '0%', transform: 'scale(1.1)' }
+      },
+      spin: {
+        '0%': { transform: 'rotate(0deg)' },
+        '100%': { transform: 'rotate(360deg)' }
       }
     },
     animation: {
-      rise: 'rise 1.5s forwards'
+      rise: 'rise 1.5s forwards',
+      spin: 'spin 1s linear infinite',
     }
   },
   plugins: [],

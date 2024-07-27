@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/Button";
 import { GetOrderDetailResponse } from '@/model/spec/GetOrderDetailResponse';
 import SpinnerIcon from '@/components/icon/SpinnerIcon';
+import axios from 'axios';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [orderAmount, setOrderAmount] = useState(0);
@@ -15,11 +16,14 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const fetchOrder = async () => {
-      const res = await fetch(`/api/orders?order_id=${params.id}`);
-      const data = await res.json();
-      setLoading(false);
-      setOrder(data);
-      // setPrice(data.variations[0].price);
+      try {
+        const res = await axios.get(`/api/orders?order_id=${params.id}`);
+        const data = await res.data;
+        setLoading(false);
+        setOrder(data);
+      } catch (error) {
+        setLoading(false);
+      }
     }
 
     fetchOrder();
@@ -53,14 +57,14 @@ export default function Detail({ params }: { params: { id: string } }) {
   }
 
   // TODO: not implemented yet
-  const cancelOrder = async () => {
-    const res = await fetch(`/api/orders/cancel?order_id=${params.id}`);
-    const data = await res.json();
-    if (res.status === 200) {
-      console.log("cancelled order");
-      // TODO: cher to implement refresh content  
-    }
-  }
+  // const cancelOrder = async () => {
+  //   const res = await fetch(`/api/orders/cancel?order_id=${params.id}`);
+  //   const data = await res.json();
+  //   if (res.status === 200) {
+  //     console.log("cancelled order");
+  //     // TODO: cher to implement refresh content  
+  //   }
+  // }
 
   return (
     <div>
