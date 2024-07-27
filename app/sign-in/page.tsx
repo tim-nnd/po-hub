@@ -1,14 +1,19 @@
 "use client";
 
+import ChromeIcon from "@/components/icon/ChromeIcon";
+import { useAlert } from "@/components/ui/AlertProvider";
 import { useAuth } from "@/components/ui/AuthProvider";
 import { Button } from "@/components/ui/Button";
 import axios from "axios";
 import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
+import { useRouter } from "next/navigation";
 import { useCallback } from "react";
 
 export default function SignInPage() {
   const { user, setUser } = useAuth();
-  
+  const { showAlert } = useAlert();
+  const router = useRouter();
+
   const handleAuthWithGoogle = useCallback(async () => {
     try {
       const result = await signInWithPopup(getAuth(), new GoogleAuthProvider());
@@ -17,10 +22,11 @@ export default function SignInPage() {
       let user: User = await syncUser();
       setUser(user);
 
-      alert(`Authenticated as ${user.email}`);
+      showAlert(`Authenticated as ${user.email}`);
+      setTimeout(() => router.push('/'), 1500);
     } catch (error: any) {
       const errorMessage = error.message;
-      alert(errorMessage);
+      showAlert(errorMessage);
     }
   }, [])
 
@@ -39,28 +45,5 @@ export default function SignInPage() {
         </Button>
       </div>
     </div>
-  );
-}
-
-function ChromeIcon(props: React.SVGProps<SVGSVGElement>) {
-  return (
-    <svg
-      {...props}
-      xmlns="http://www.w3.org/2000/svg"
-      width="24"
-      height="24"
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="12" cy="12" r="10" />
-      <circle cx="12" cy="12" r="4" />
-      <line x1="21.17" x2="12" y1="8" y2="8" />
-      <line x1="3.95" x2="8.54" y1="6.06" y2="14" />
-      <line x1="10.88" x2="15.46" y1="21.94" y2="14" />
-    </svg>
   );
 }

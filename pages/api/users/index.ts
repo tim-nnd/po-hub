@@ -4,16 +4,19 @@ import dbConnect from "@/lib/dbConnect";
 import { getAuth } from "firebase-admin/auth";
 import Cookies from 'cookies';
 import { getFirebaseAdminApp } from "@/lib/getFirebaseAdminApp";
+import UpdateUserRequest from "@/model/spec/UpdateUserRequest";
 
-const postSyncUser = async (userId: string, email: string | undefined) => {
+const postUser = async (userId: string, username: string, phone_number: string) => {
   await dbConnect();
   const user = await User.findOne({ _id: userId }).lean();
-  if (user) return;
+  if (!user) return;
 
   try {
-    await User.create({
+    await User.updateOne({
       _id: userId,
-      email: email,
+    }, {
+      username: username,
+      phone_number: phone_number
     });
   } catch (error) {
     console.error(error);
@@ -39,7 +42,9 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         throw new Error("Invalid Token")
       }
 
-      await postSyncUser(idToken.uid, idToken.email);
+      const spec = UpdateUserRequest.parse(req.body);
+
+      await postUser(idToken.uid, spec.username, spec.phone_number);
       res.status(200).json({ success: true, user: idToken })
     } catch (error) {
       console.log(error)
