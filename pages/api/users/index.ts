@@ -26,7 +26,7 @@ const postUser = async (userId: string, username: string, phone_number: string) 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const { method } = req;
 
-  if (method === 'POST') {
+  if (method === 'PUT') {
     try {
       const auth = getAuth(getFirebaseAdminApp());
       const cookies = new Cookies(req, res);
@@ -45,7 +45,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const spec = UpdateUserRequest.parse(req.body);
 
       await postUser(idToken.uid, spec.username, spec.phone_number);
-      res.status(200).json({ success: true, user: idToken })
+      res.status(200).json({ success: true })
     } catch (error) {
       console.log(error)
       res.status(400).json({ success: false })
