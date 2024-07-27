@@ -2,15 +2,22 @@
 
 import Link from "next/link";
 import HomeIcon from "../icon/HomeIcon";
-import ShoppingBagIcon from "../icon/ShoppingBagIcon";
-import EnvelopeIcon from "../icon/EnvelopeIcon";
 import UserIcon from "../icon/UserIcon";
 import { useAuth } from "./AuthProvider";
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
+import ClipboardIcon from "../icon/ClipboardIcon";
+import { usePathname } from "next/navigation";
 
 export default function BottomNavBar() {
   const { appUser, user } = useAuth();
-  const [accountLink, setAccountLink] = useState("/sing-in");
+  const [accountLink, setAccountLink] = useState("/sign-in");
+  const pathname = usePathname();
+
+  const [filled, setFilled] = useState({
+    home: false,
+    order: false,
+    account: false
+  });
 
   useEffect(() => {
     if (!appUser) {
@@ -23,6 +30,15 @@ export default function BottomNavBar() {
 
   }, [appUser, user])
 
+  useEffect(() => {
+    console.log(pathname)
+    setFilled({
+      home: pathname === "/",
+      order: pathname === "/order",
+      account: pathname === "/account"
+    });
+  }, [pathname])
+
   return (
     <nav className="sticky bottom-0 z-50 flex h-14 max-w-[500px] items-center justify-around shadow-t">
       <Link
@@ -30,7 +46,7 @@ export default function BottomNavBar() {
         className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"
         prefetch={false}
       >
-        <HomeIcon />
+        <HomeIcon filled={filled.home} />
         <span className="text-xs font-medium">Home</span>
       </Link>
       <Link
@@ -38,23 +54,15 @@ export default function BottomNavBar() {
         className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"
         prefetch={false}
       >
-        <ShoppingBagIcon />
+        <ClipboardIcon filled={filled.order} />
         <span className="text-xs font-medium">Orders</span>
       </Link>
-      {/* <Link
-          href="/inbox"
-          className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"
-          prefetch={false}
-        >
-          <EnvelopeIcon />
-          <span className="text-xs font-medium">Inbox</span>
-        </Link> */}
       <Link
         href={accountLink}
         className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"
         prefetch={false}
       >
-        <UserIcon />
+        <UserIcon filled={filled.account} />
         <span className="text-xs font-medium">Account</span>
       </Link>
     </nav>
