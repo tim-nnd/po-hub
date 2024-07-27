@@ -16,17 +16,14 @@ export const HomeListItem: React.FC<HomeListItemProps> = ({ title = 'Title', sub
       className={classNames('p-4', className)}
       {...props}
     >
-      <div className="flex items-start bg-gray-100 p-4 rounded-lg mb-4">
-        <Image
+      <div className="flex items-start">
+        <img
           src={image}
           alt="Image"
-          objectFit="cover"
-          objectPosition="center"
-          width={100}
-          height={100}
-          priority
+          className='w-28 h-28'
+          style={{ objectFit: 'cover' }}
         />
-        <div className="flex-1">
+        <div className="flex-1 ml-3">
           <h1 className="font-bold text-xl">{title}</h1>
           <p className="mb-2 text-m">{subtitle}</p>
           <div className="relative pt-1">
