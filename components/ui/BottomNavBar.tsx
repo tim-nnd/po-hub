@@ -40,7 +40,7 @@ export default function BottomNavBar() {
   }, [pathname])
 
   return (
-    <nav className="sticky bottom-0 z-50 flex h-14 max-w-[500px] items-center justify-around shadow-t">
+    <nav className="sticky bottom-0 z-50 flex h-16 max-w-[500px] items-center justify-around shadow-t pt-1">
       <Link
         href="/"
         className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"

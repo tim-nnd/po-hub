@@ -30,7 +30,9 @@ export default function Home() {
             id = {product.id}
             title = {product.name}
             subtitle = {product.description}
-            progress = {Math.floor((product.order_count / product.max_order) * 100)} 
+            min = {product.min_order}
+            max = {product.max_order}
+            currentValue = {product.order_count}
             image = {product.image_url}
           />
         ))}
