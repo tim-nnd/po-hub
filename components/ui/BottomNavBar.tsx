@@ -35,7 +35,7 @@ export default function BottomNavBar() {
           <span className="text-xs font-medium">Home</span>
         </Link>
         <Link
-          href="/orders"
+          href="/order"
           className="flex flex-col items-center justify-center gap-1 text-muted-foreground transition-colors hover:text-primary"
           prefetch={false}
         >
