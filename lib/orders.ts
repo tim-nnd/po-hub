@@ -45,3 +45,11 @@ export const getOrderCountByProductId = async (productId: string) => {
 
   return result[0]?.orderCount || 0;
 }
+
+// TODO: use pagination
+export const getOrdersByUserId = async (userId: string) => {
+  await dbConnect();
+  return await Order.find({
+      buyer_id: userId,
+  }).lean();
+}

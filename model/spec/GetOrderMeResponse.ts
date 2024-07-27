@@ -17,6 +17,7 @@ export interface OrderProductDetailVariation {
     available_at: string,
     min_order: number,
     max_order: number,
+    order_count: number,
     seller_id: string,
     variations: OrderProductDetailVariation[],
     deleted_at: string,
