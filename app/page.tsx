@@ -25,6 +25,7 @@ export default function Home() {
         {products.map((product, index) => (
           <HomeListItem
             key = {index}
+            id = {product.id}
             title = {product.name}
             subtitle = {product.description}
             progress = {Math.floor((product.order_count / product.max_order) * 100)} 
