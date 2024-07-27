@@ -7,6 +7,7 @@ interface HomeListItemProps {
   subtitle: string;
   progress: number;
   image: string;
+  className?: string;
 };
 
 export const HomeListItem: React.FC<HomeListItemProps> = ({ title = 'Title', subtitle = 'lorem ipsum dolor sit amet', progress = '0', image, className, ...props }) => {
