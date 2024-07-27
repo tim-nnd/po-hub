@@ -1,7 +1,6 @@
 import { Schema, SchemaType, SchemaTypes } from 'mongoose';
 
 const OrderSchema = new Schema({
-  _id: String,
   buyer_id: String,
   product_id: String,
   state: String,

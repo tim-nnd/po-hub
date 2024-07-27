@@ -1,7 +1,6 @@
 import { Schema, SchemaTypes } from 'mongoose';
 
 const ProductSchema = new Schema({
-  _id: String,
   name: String,
   description: String,
   image_url: String,
