@@ -2,7 +2,14 @@ import React from 'react';
 import Image from "next/image";
 import classNames from 'classnames';
 
-export const HomeListItem = ({ title = 'Title', subtitle = 'lorem ipsum dolor sit amet', progress = '0', image, className, ...props }) => {
+interface HomeListItemProps {
+  title: string;
+  subtitle: string;
+  progress: number;
+  image: string;
+};
+
+export const HomeListItem: React.FC<HomeListItemProps> = ({ title = 'Title', subtitle = 'lorem ipsum dolor sit amet', progress = '0', image, className, ...props }) => {
   return (
     <div 
       className={classNames('p-4', className)}
