@@ -82,13 +82,13 @@ export default function Detail({ params }: { params: { id: string } }) {
             <button className="py-2 px-4 text-white bg-blue-900 rounded-r-lg hover:bg-blue-700" onClick={stepUp}>+</button>
           </div>
         </div> */}
-        { order.state !== "Cancelled by buyer" &&
+        {/* { order.state !== "Cancelled by buyer" &&
           <div onClick={cancelOrder}>
             <Button variant="primary" className="py-3">
               Cancel
             </Button>
           </div>
-        }
+        } */}
         <section className="mt-10">
           <h3 className="text-2xl font-bold mb-4">About the PreOrder</h3>
           <p className="text-lg mb-4">{order.product_detail?.description}</p>
