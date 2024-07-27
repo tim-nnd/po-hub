@@ -41,7 +41,7 @@ export default function SignInPhonePage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4 rounded-lg">
+    <div className="flex flex-col items-center justify-center p-4 rounded-lg">
       <h1 className="mb-8 text-3xl font-bold">PreOrdr</h1>
       <div className="text-center">
         <h2 className="mb-2 text-xl font-bold">

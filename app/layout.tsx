@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className="max-w-[500px] relative mx-auto">
+      <body className="max-w-[500px] relative mx-auto min-h-screen">
         <AuthProvider>
           <AlertProvider>
             <div className="pb-16">{children}</div>

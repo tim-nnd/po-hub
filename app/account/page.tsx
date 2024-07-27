@@ -29,16 +29,23 @@ export default function AccountPage() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="mt-20">
-        <Link href="/create-product">
-          <Button variant="primary" className="flex items-center px-4 py-2">
-            Create Product
+    <div>
+      <div className="flex flex-col px-4 pl-8 pt-10">
+        <h2 className="text-2xl font-bold">Name</h2>
+        <p className="text-secondary">Email</p>
+        <p className="text-xl font-bold">+62 1234 5678</p>
+      </div>
+      <div className="flex flex-col items-center justify-center">
+        <div className="mt-20">
+          <Link href="/create-product">
+            <Button variant="primary" className="w-full items-center px-4 py-2 mb-4">
+              Create Product
+            </Button>
+          </Link>
+          <Button onClick={logOut} variant="secondary" className="w-full items-center px-4 py-2">
+            Log Out
           </Button>
-        </Link>
-        <Button onClick={logOut} variant="primary" className="flex items-center px-4 py-2">
-          Log Out
-        </Button>
+        </div>
       </div>
     </div>
   )
