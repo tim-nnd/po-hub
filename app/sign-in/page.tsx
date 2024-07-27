@@ -1,7 +1,7 @@
 "use client";
 
 import { useAuth } from "@/components/ui/AuthProvider";
-import { Button } from "@/components/ui/button";
+import { Button } from "@/components/ui/Button";
 import axios from "axios";
 import { getAuth, GoogleAuthProvider, signInWithPopup, User } from "firebase/auth";
 import { useCallback } from "react";
@@ -33,7 +33,7 @@ export default function SignInPage() {
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-4xl font-bold">POHub</h1>
       <div className="mt-20">
-        <Button onClick={handleAuthWithGoogle} variant="primary" className="flex items-center px-4 py-2 border rounded-md">
+        <Button onClick={handleAuthWithGoogle} variant="primary" className="flex items-center px-4 py-2">
           <ChromeIcon className="w-6 h-6 mr-2" />
           Sign in with Google
         </Button>
