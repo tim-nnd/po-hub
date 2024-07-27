@@ -1,5 +1,6 @@
-// pages/api/users/me.js
-// import { getUserById } from '@lib/db'; // Import your database function
+import { createProduct } from '@/lib/products';
+import { IProduct, IProductVariation, Product } from '@/model/Product';
+import CreateProductRequest from '@/model/spec/CreateProductRequest';
 
 export default async function handler(req: any, res: any) {
     const { method } = req;
@@ -15,12 +16,34 @@ export default async function handler(req: any, res: any) {
   
 
 const postProduct = (req: any, res: any) => {
-    const body = req.body;
+    const validatedProduct = CreateProductRequest.parse(req.body);
     
+    const product = {
+        _id: '',
+        name: validatedProduct?.name,
+        description: validatedProduct?.description,
+        image_url: validatedProduct?.image_url,
+        state: 'State Here', // Provide based on your business logic
+        closed_at: validatedProduct?.closed_at.toISOString(),
+        available_at: validatedProduct?.available_at.toISOString(),
+        min_order: validatedProduct?.min_order,
+        max_order: validatedProduct?.max_order,
+        seller_id: 'Seller ID Here', // Provide based on your business logic
+        variations: validatedProduct?.variations.map(variation => {
+        return {
+            id: '', // Provide based on your business logic
+            name: variation?.name,
+            price: variation?.price,
+            image_url: variation?.image_url
+        } as IProductVariation;
+        }),
+    } as IProduct;
+
     try {
-        // save to DB
-        res.status(200).json({ status: 'success', message: 'Product has been added' /*, data: ... */});
+        createProduct(product)
+        return res.status(200).json({ status: 'success', message: 'Product has been added' /*, data: ... */});
     } catch (error) {
+        console.log(error)
         return res.status(500).json({ message: 'Internal error' });
     }
     
