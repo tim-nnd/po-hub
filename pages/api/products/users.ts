@@ -1,8 +1,5 @@
 // pages/api/users/me.js
-import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
 // import { getUserById } from '@lib/db'; // Import your database function
-
-const JWT_SECRET = process.env.JWT_SECRET as Secret; // Make sure to set this in your environment variables
 
 export default async function handler(req: any, res: any) {
   if (req.method !== 'GET') {
