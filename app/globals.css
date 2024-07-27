@@ -4,15 +4,45 @@
 
 :root {
   --foreground-rgb: 0, 0, 0;
+  --foreground-secondary-rgb: 75, 85, 99;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+
+  --button-primary-background-rgb: 0, 0, 0;
+  --button-primary-foreground-rgb: 255, 255, 255;
+  --button-hover-primary-background-rgb: 20, 20, 20;
+  --button-secondary-background-rgb: 255, 255, 255;
+  --button-secondary-foreground-rgb: 0, 0, 0;
+  --button-secondary-border-rgb: 0, 0, 0;
+  --button-hover-secondary-background-rgb: 220, 220, 220;
+
+  --input-bg-rgb: 255, 255, 255;
+  --input-text-rgb: 0, 0, 0;
+  --input-border-rgb: 200, 200, 200;
+  --input-focus-border-rgb: 75, 85, 99;
+  --input-hover-border-rgb: 0, 0, 0;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
     --foreground-rgb: 255, 255, 255;
+    --foreground-secondary-rgb: 156, 163, 175;
     --background-start-rgb: 0, 0, 0;
     --background-end-rgb: 0, 0, 0;
+
+    --button-primary-background-rgb: 255, 255, 255;
+    --button-primary-foreground-rgb: 0, 0, 0;
+    --button-hover-primary-background-rgb: 220, 220, 220;
+    --button-secondary-background-rgb: 0, 0, 0;
+    --button-secondary-foreground-rgb: 255, 255, 255;
+    --button-secondary-border-rgb: 255, 255, 255;
+    --button-hover-secondary-background-rgb: 20, 20, 20;
+
+    --input-bg-rgb: 38, 38, 38;
+    --input-text-rgb: 255, 255, 255;
+    --input-border-rgb: 75, 85, 99;
+    --input-focus-border-rgb: 107, 114, 128;
+    --input-hover-border-rgb: 255, 255, 255;
   }
 }
 
@@ -24,6 +54,49 @@ body {
       rgb(var(--background-end-rgb))
     )
     rgb(var(--background-start-rgb));
+}
+
+.text-secondary {
+  color: rgb(var(--foreground-secondary-rgb));
+}
+
+.button-primary {
+  background-color: rgb(var(--button-primary-background-rgb));
+  color: rgb(var(--button-primary-foreground-rgb));
+}
+
+.button-primary:hover {
+  background-color: rgb(var(--button-hover-primary-background-rgb));
+}
+
+.button-secondary {
+  background-color: rgb(var(--button-secondary-background-rgb));
+  color: rgb(var(--button-secondary-foreground-rgb));
+  border: 1px solid;
+  border-color: rgb(var(--button-secondary-border-rgb));
+}
+
+.button-secondary:hover {
+  background-color: rgb(var(--button-hover-secondary-background-rgb));
+}
+
+input {
+  background-color: rgb(var(--input-bg-rgb));
+  color: rgb(var(--input-text-rgb));
+  border: 1px solid;
+  border-color: rgb(var(--input-border-rgb));
+  /* padding: 0.5rem;
+  border-radius: 0.375rem; */
+  transition: border-color 0.3s;
+}
+
+input:focus {
+  border-color: rgb(var(--input-focus-border-rgb));
+  outline: none;
+}
+
+input:hover {
+  border-color: rgb(var(--input-hover-border-rgb));
 }
 
 @layer utilities {
