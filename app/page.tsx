@@ -12,19 +12,19 @@ export default function Home() {
         <HomeListItem
           title = 'Mie'
           subtitle = 'lorem ipsum dolor sit amet'
-          progress = '40'
+          progress = {40}
           image = '/chikapu.jpg'
         />
         <HomeListItem
           title = 'Ayam'
           subtitle = 'lorem ipsum dolor sit amet'
-          progress = '20'
+          progress = {20}
           image = '/chikapu.jpg'
         />
         <HomeListItem
           title = 'Pangsit'
           subtitle = 'lorem ipsum dolor sit amet'
-          progress = '70'
+          progress = {70}
           image = '/chikapu.jpg'
       />
       </div>
