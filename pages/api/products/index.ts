@@ -3,7 +3,7 @@ import { createProduct, getProductById } from '@/lib/products';
 import { getUserById, getUserUidFromCookies } from '@/lib/users';
 import { IProduct, IProductVariation, Product } from '@/model/Product';
 import CreateProductRequest from '@/model/spec/CreateProductRequest';
-import { GetProductResponse, ProductVariation } from '@/model/spec/GetProductResponse';
+import { GetProductResponse, ProductVariation } from '@/model/spec/GetProductDetailResponse';
 import { nanoid } from 'nanoid';
 
 export default async function handler(req: any, res: any) {
@@ -22,6 +22,9 @@ export default async function handler(req: any, res: any) {
 
 const getProduct = async (req: any, res: any) => {
   const { product_id } = req.query;
+  if (product_id == "") {
+    return res.status(400).json({ message: 'Invalid product_id' })
+  }
 
   try {
     const product: IProduct | null = await getProductById(product_id);
@@ -63,7 +66,7 @@ const getProduct = async (req: any, res: any) => {
       order_count: orderCount,
     } as GetProductResponse;
 
-
+    return res.status(200).json(resp)
   } catch (error) {
     console.log(error);
     return res.status(500).json({ message: 'Internal error' });

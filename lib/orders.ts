@@ -24,6 +24,14 @@ export const getOrdersByProductId = async (productId: string) => {
   }).lean()
 }
 
+export const getOrderById = async (orderId: string, buyerId: string) => {
+  await dbConnect();
+  return await Order.findOne({
+    _id: orderId,
+    buyer_id: buyerId,
+  }).lean();
+}
+
 export const getOrderCountByProductId = async (productId: string) => {
   await dbConnect();
   const result = await Order.aggregate([
