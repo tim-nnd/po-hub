@@ -111,7 +111,7 @@ export default function CreateProductPage() {
               id="description"
               name="description"
               placeholder="Description"
-              className="w-full px-3 py-2 rounded-md"
+              className="w-full px-3 py-2 rounded-md h-56 resize-none"
               value={form.description}
               onChange={handleChange}
             />
