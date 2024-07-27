@@ -1,3 +1,7 @@
+import { Order } from '@/model/Order';
+import { Product } from '@/model/Product';
+import { User } from '@/model/User';
+import { Notification } from '@/model/Notification';
 import mongoose from 'mongoose'
 
 const MONGODB_URI = process.env.MONGODB_URI || '';
@@ -30,10 +34,10 @@ async function dbConnect() {
     }
 
     cached.promise = mongoose.connect(MONGODB_URI, opts).then((mongooseObj) => {
-      // let models = [];
-      // models.forEach((model) => {
-      //   console.log(`Initialized ${model.modelName}`)
-      // })
+      let models = [User, Product, Order, Notification];
+      models.forEach((model) => {
+        console.log(`Initialized ${model.modelName}`)
+      })
       return mongooseObj
     })
   }
