@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { GetProductResponse } from '@/model/spec/GetProductDetailResponse';
 import { useAlert } from '@/components/ui/AlertProvider';
 import { useRouter } from 'next/navigation';
+import { ProgressBar } from '@/components/ui/ProgressBar';
 import SpinnerIcon from '@/components/icon/SpinnerIcon';
 import axios from 'axios';
 
@@ -109,10 +110,13 @@ export default function Detail({ params }: { params: { id: string } }) {
         <h2 className="text-4xl font-bold mt-1 mb-4">{product.name}</h2>
         <p className="text-2xl font-bold">{product.order_count} orders</p>
         <p className="text-secondary">{text}</p>
-        <div className="relative overflow-hidden h-3 mb-4 rounded bg-blue-200">
-          <div style={{ width: `${((product.order_count + orderAmount) / product.max_order) * 100}%` }} className="absolute top-0 left-0 h-full bg-blue-300 transition-all duration-300"></div>
-          <div style={{ width: `${(product.order_count / product.max_order) * 100}%` }} className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"></div>
-        </div>
+        <ProgressBar 
+          className="h-2"
+          min={product.min_order}
+          max={product.max_order}
+          currentValue={product.order_count}
+          additionalValue={orderAmount}
+        />
         <h3 className="text-2xl mt-1">Price: <span className="font-bold">{formatIDR(price)}</span></h3>
         <form onSubmit={handleSubmit}>
           <div className="flex items-center mb-4">
