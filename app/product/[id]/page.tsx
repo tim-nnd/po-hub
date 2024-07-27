@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/Button";
 import { GetProductResponse } from '@/model/spec/GetProductDetailResponse';
 import { useAlert } from '@/components/ui/AlertProvider';
 import { useRouter } from 'next/navigation';
+import SpinnerIcon from '@/components/icon/SpinnerIcon';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [orderAmount, setOrderAmount] = useState(0);
@@ -12,6 +13,7 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<GetProductResponse | null>(null);
   const [price, setPrice] = useState(0);
   const [text, setText] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const { showAlert } = useAlert();
   const router = useRouter();
@@ -21,6 +23,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       const res = await fetch(`/api/products?product_id=${params.id}`);
       const data = await res.json();
       setProduct(data);
+      setLoading(false);
       setPrice(data.variations[0].price);
     }
 
@@ -63,7 +66,12 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!product || orderAmount <= 0) return;
+    if (!product) return;
+
+    if (orderAmount <= 0) {
+      showAlert('Order amount must be greater than 0');
+      return;
+    }
 
     const res = await fetch(`/api/orders`, {
       method: 'POST',
@@ -90,7 +98,9 @@ export default function Detail({ params }: { params: { id: string } }) {
   }
 
   if (!product) {
-    return <div></div>;
+    return <main className="p-4">
+      <SpinnerIcon />
+    </main>;
   }
 
   return (
