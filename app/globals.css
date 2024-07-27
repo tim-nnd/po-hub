@@ -9,15 +9,15 @@
   --background-side-rgb: 214, 219, 220;
   --nav-border-rgb: 200, 200, 200;
 
-  --button-primary-background-rgb: 0, 0, 0;
+  --button-primary-background-rgb: 0, 180, 80;
   --button-primary-foreground-rgb: 255, 255, 255;
-  --button-hover-primary-background-rgb: 20, 20, 20;
+  --button-hover-primary-background-rgb: 0, 160, 70;
   --button-secondary-background-rgb: 255, 255, 255;
   --button-secondary-foreground-rgb: 0, 0, 0;
   --button-secondary-border-rgb: 0, 0, 0;
   --button-hover-secondary-background-rgb: 220, 220, 220;
 
-  --input-bg-rgb: 255, 255, 255;
+  --input-bg-rgb: 241, 241, 241;
   --input-text-rgb: 0, 0, 0;
   --input-border-rgb: 200, 200, 200;
   --input-focus-border-rgb: 75, 85, 99;
@@ -37,9 +37,9 @@
     --background-side-rgb: 24, 24, 24;
     --nav-border-rgb: 75, 85, 99;
 
-    --button-primary-background-rgb: 255, 255, 255;
+    --button-primary-background-rgb: 0, 200, 100;
     --button-primary-foreground-rgb: 0, 0, 0;
-    --button-hover-primary-background-rgb: 220, 220, 220;
+    --button-hover-primary-background-rgb: 0, 180, 90;
     --button-secondary-background-rgb: 0, 0, 0;
     --button-secondary-foreground-rgb: 255, 255, 255;
     --button-secondary-border-rgb: 255, 255, 255;
