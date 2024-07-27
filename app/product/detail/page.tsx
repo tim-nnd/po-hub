@@ -27,7 +27,7 @@ export default function Detail() {
   }
 
   return (
-    <div className="min-h-screen">
+    <div>
       <img src="/chikapu.jpg" alt="Campaign image" className="w-full"/>
       <div className="flex flex-col px-4">
         <h2 className="text-4xl font-bold mt-1 mb-4">PreOrder Title</h2>
@@ -35,8 +35,8 @@ export default function Detail() {
         <p className="text-2xl font-bold">{orders} orders</p>
         <p className="text-secondary">{text}</p>
         <div className="relative overflow-hidden h-3 mb-4 rounded bg-blue-200">
-          <div style={{ width: `${((orders+orderAmount)/maximum)*100}%` }} className="absolute top-0 left-0 h-full bg-blue-300"></div>
-          <div style={{ width: `${(orders/maximum)*100}%` }} className="absolute top-0 left-0 h-full bg-blue-500"></div>
+          <div style={{ width: `${((orders+orderAmount)/maximum)*100}%` }} className="absolute top-0 left-0 h-full bg-blue-300 transition-all duration-300"></div>
+          <div style={{ width: `${(orders/maximum)*100}%` }} className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"></div>
         </div>
         <div className="flex items-center mb-4">
           <button className="py-2 px-4 text-white bg-blue-900 rounded-l-lg hover:bg-blue-700" onClick={stepDown}>-</button>

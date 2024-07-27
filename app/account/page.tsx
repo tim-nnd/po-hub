@@ -29,14 +29,14 @@ export default function AccountPage() {
 
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
+    <div className="flex flex-col items-center justify-center">
       <div className="mt-20">
         <Link href="/create-product">
           <Button variant="primary" className="flex items-center px-4 py-2">
             Create Product
           </Button>
         </Link>
-        <Button onClick={logOut} variant="primary" className="flex items-center px-4 py-2">
+        <Button onClick={logOut} variant="secondary" className="flex items-center px-4 py-2">
           Log Out
         </Button>
       </div>
