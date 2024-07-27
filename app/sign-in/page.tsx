@@ -41,7 +41,7 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-4xl font-bold">PreOrdr</h1>
       <div className="mt-20">
         <Button onClick={handleAuthWithGoogle} variant="primary" className="flex items-center px-4 py-2">
