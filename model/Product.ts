@@ -1,4 +1,4 @@
-import { model, Model, models } from "mongoose";
+import { model, Model, models, Types } from "mongoose";
 import ProductSchema from "./schema/ProductSchema";
 
 export interface IProductVariation {
@@ -9,7 +9,7 @@ export interface IProductVariation {
 }
 
 export interface IProduct {
-  _id: string,
+  _id: Types.ObjectId,
   name: string,
   description: string,
   image_url: string,

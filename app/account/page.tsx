@@ -5,6 +5,7 @@ import { useAuth } from "@/components/ui/AuthProvider";
 import { Button } from "@/components/ui/Button";
 import { getFirebaseClientApp } from "@/lib/getFirebaseClientApp";
 import { getAuth } from "firebase/auth";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
@@ -30,6 +31,11 @@ export default function AccountPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <div className="mt-20">
+        <Link href="/create-product">
+          <Button variant="primary" className="flex items-center px-4 py-2">
+            Create Product
+          </Button>
+        </Link>
         <Button onClick={logOut} variant="primary" className="flex items-center px-4 py-2">
           Log Out
         </Button>

@@ -20,7 +20,7 @@ export default function RootLayout({
       <body className="w-[500px] relative mx-auto">
         <AuthProvider>
           <AlertProvider>
-            {children}
+            <div className="pb-16">{children}</div>
             <BottomNavBar />
             <AlertContainer />
           </AlertProvider>
