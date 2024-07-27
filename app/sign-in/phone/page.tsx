@@ -32,10 +32,10 @@ export default function SignInPhonePage() {
     try {
       await axios.put(`/api/users`, form);
       showAlert('Profile updated successfully!');
+      setLoading(false);
       setTimeout(() => router.push('/'), 1500);
     } catch (exception) {
       showAlert('Failed to update profile.');
-    } finally {
       setLoading(false);
     }
   }
