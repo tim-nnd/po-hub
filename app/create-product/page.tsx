@@ -70,10 +70,10 @@ export default function CreateProductPage() {
     try {
       await axios.post(`/api/products`, newForm);
       showAlert('Product created successfully!');
+      setLoading(false);
       setTimeout(() => router.push('/'), 1500);
     } catch (exception) {
       showAlert('Failed to create product.');
-    } finally {
       setLoading(false);
     }
   }

@@ -5,18 +5,26 @@ import { HomeListItem } from "@/components/home/HomeListItem";
 import { useEffect, useState } from "react";
 import { GetProductFeedItem } from "@/model/spec/GetProductFeedItem";
 import SpinnerIcon from "@/components/icon/SpinnerIcon";
+import axios from "axios";
+import { useAlert } from "@/components/ui/AlertProvider";
 
 export default function Home() {
   const { user } = useAuth();
   const [products, setProducts] = useState<GetProductFeedItem[]>([]);
   const [loading, setLoading] = useState(true);
+  const { showAlert } = useAlert();
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const res = await fetch('/api/products/feeds');
-      const data = await res.json();
-      setLoading(false);
-      setProducts(data);
+      try {
+        const res = await axios.get('/api/products/feeds');
+        const data = await res.data;
+        setLoading(false);
+        setProducts(data);
+      } catch (error) {
+        setLoading(false);
+        showAlert('Failed to fetch products');
+      }
     }
 
     fetchProducts();
@@ -30,7 +38,8 @@ export default function Home() {
         <SpinnerIcon />
       ) : (
         <div className="w-full">
-          {products.map((product, index) => (
+          {(!products || products.length == 0) && <div>There are no products</div>}
+          {!!products && products.length > 0 && products.map((product, index) => (
             <HomeListItem
               key={index}
               id={product.id}

@@ -6,6 +6,7 @@ import { GetProductResponse } from '@/model/spec/GetProductDetailResponse';
 import { useAlert } from '@/components/ui/AlertProvider';
 import { useRouter } from 'next/navigation';
 import SpinnerIcon from '@/components/icon/SpinnerIcon';
+import axios from 'axios';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [orderAmount, setOrderAmount] = useState(0);
@@ -20,11 +21,16 @@ export default function Detail({ params }: { params: { id: string } }) {
 
   useEffect(() => {
     const fetchProduct = async () => {
-      const res = await fetch(`/api/products?product_id=${params.id}`);
-      const data = await res.json();
-      setProduct(data);
-      setLoading(false);
-      setPrice(data.variations[0].price);
+      try {
+        const res = await axios.get(`/api/products?product_id=${params.id}`);
+        const data = await res.data;
+        setProduct(data);
+        setLoading(false);
+        setPrice(data.variations[0].price);
+      } catch (error) {
+        setLoading(false);
+        showAlert('Failed to fetch product');
+      }
     }
 
     fetchProduct();
@@ -73,28 +79,21 @@ export default function Detail({ params }: { params: { id: string } }) {
       return;
     }
 
-    const res = await fetch(`/api/orders`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
+    try {
+      const res = await axios.post(`/api/orders`, {
         product_id: product.id,
         variations: [{
           variation_id: product.variations[0].variation_id,
           amount: orderAmount
         }]
-      })
-    });
-    const data = await res.json();
-    if (res.ok) {
+      });
+      const data = await res.data;
       showAlert('Order success');
-      setTimeout(() => {
-        router.push('/');
-      }, 1500);
-    } else {
-      showAlert(data.message);
+      setTimeout(() => router.push('/'), 1500);
+    } catch (error) {
+      showAlert('Order failed');
     }
+
   }
 
   if (!product) {
