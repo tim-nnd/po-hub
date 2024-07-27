@@ -6,7 +6,7 @@ export const createOrder = async (order: IOrder) => {
   return await Order.create(order);
 }
 
-export const cancelOrders = async (productId: string, newState: string) => {
+export const cancelOrdersByProductId = async (productId: string, newState: string) => {
   await dbConnect();
   return await Order.updateMany({
     'product_detail.product_id': productId
@@ -37,7 +37,8 @@ export const getOrderCountByProductId = async (productId: string) => {
   const result = await Order.aggregate([
     {
       $match: {
-        'product_detail.product_id': productId
+        'product_detail.product_id': productId,
+        state: { $ne: 'CANCELLED' }
       }
     },
     {
@@ -60,4 +61,16 @@ export const getOrdersByUserId = async (userId: string) => {
   return await Order.find({
       buyer_id: userId,
   }).lean();
+}
+
+export const cancelOrder = async (orderId: string, buyerId: string) => {
+  await dbConnect();
+  return await Order.updateOne({
+      _id: orderId,
+      buyer_id: buyerId,
+  }, {
+      $set: {
+          state: 'CANCELLED'
+      }
+  })
 }
