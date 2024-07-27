@@ -38,7 +38,7 @@ export const getOrderCountByProductId = async (productId: string) => {
     {
       $match: {
         'product_detail.product_id': productId,
-        state: { $ne: 'CANCELLED' }
+        state: { $nin: ['CANCELLED', 'CANCELLED_BY_SELLER'] }
       }
     },
     {

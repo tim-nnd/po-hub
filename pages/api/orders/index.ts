@@ -56,6 +56,9 @@ const getOrder = async (req: any, res: any) => {
     case "CANCELLED_BY_SELLER":
       orderState = "Cancelled by seller"
       break;
+    case "CANCELLED":
+      orderState = "Cancelled by buyer"
+      break;
     case "COMPLETED":
       orderState = "Completed"
   
