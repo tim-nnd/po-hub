@@ -25,12 +25,11 @@ export const HomeListItem: React.FC<HomeListItemProps> = ({ id = '', title = 'Ti
           <img
             src={image}
             alt="Image"
-            className='w-28 h-28'
-            style={{ objectFit: 'cover' }}
+            className='w-1/4 object-cover bg-center bg-no-repeat bg-fill h-48 w-full'
           />
-          <div className="flex-1 ml-3">
-            <h1 className="font-bold text-xl">{title}</h1>
-            <p className="mb-2 text-m">{subtitle}</p>
+          <div className="flex-1 pl-3 w-3/4">
+            <h1 className="font-bold text-xl mb-4">{title}</h1>
+            <p className="mb-2 text-xs whitespace-pre-line truncate h-24">{subtitle}</p>
             <div className="relative pt-1">
               <div className="flex mb-2 items-center justify-between">
                 <div>
