@@ -43,7 +43,7 @@ const getProduct = async (req: any, res: any) => {
     
     const [seller, orderCount] = await Promise.all([
       getUserById(product.seller_id),
-      getOrderCountByProductId(product._id.toString())
+      getOrderCountByProductId(product._id)
     ]);
     if (!seller) {
       return res.status(404).json({ message: 'Seller not found!' })
