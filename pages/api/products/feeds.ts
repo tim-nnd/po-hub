@@ -7,11 +7,13 @@ export default async function handler(req: any, res: any) {
       return res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   
+    const { pagination } = req.pagination;
+       
     // for now let's not use JWT so people can see
     
     try {
   
-      // const products = await getProducts();
+      // const products = await getProducts(pagination);
       // MOCK
       const products = [
         {
