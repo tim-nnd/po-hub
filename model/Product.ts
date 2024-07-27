@@ -9,7 +9,7 @@ export interface IProductVariation {
 }
 
 export interface IProduct {
-  _id: Types.ObjectId,
+  _id: string,
   name: string,
   description: string,
   image_url: string,
