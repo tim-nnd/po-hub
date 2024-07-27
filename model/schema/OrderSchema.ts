@@ -17,4 +17,6 @@ const OrderSchema = new Schema({
   versionKey: false
 });
 
+OrderSchema.index({ product_id: 1 });
+
 export default OrderSchema;

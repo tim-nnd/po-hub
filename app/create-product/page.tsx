@@ -1,12 +1,16 @@
 "use client";
 
 import { useAlert } from "@/components/ui/AlertProvider";
+import { useAuth } from "@/components/ui/AuthProvider";
 import { Button } from "@/components/ui/Button";
+import { getFirebaseClientApp } from "@/lib/getFirebaseClientApp";
 import axios from "axios";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function CreateProductPage() {
+  const { user } = useAuth();
   const { showAlert } = useAlert();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -23,21 +27,27 @@ export default function CreateProductPage() {
     variationImageUrl: ''
   });
 
+  useEffect(() => {
+    getFirebaseClientApp();
+  }, [user]);
+
   const handleChange = (e: any) => {
     const target = e.target;
     let value = target.value;
     const name = target.name;
 
     if (target.type === 'file' && target.files.length > 0) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        const base64String = reader.result as string;
-        setForm({
-          ...form,
-          [name]: base64String,
+      const file = target.files[0];
+      const storageRef = ref(getStorage(), `products/`);
+      const fileRef = ref(storageRef, file.name);
+      uploadBytes(fileRef, file, {}).then((snapshot) => {
+        getDownloadURL(snapshot.ref).then((downloadURL) => {
+          setForm({
+            ...form,
+            [name]: downloadURL,
+          });
         });
-      };
-      reader.readAsDataURL(target.files[0]);
+      });
     } else {
       setForm({
         ...form,
