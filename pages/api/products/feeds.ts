@@ -31,7 +31,7 @@ export default async function handler(req: any, res: any) {
 
         const [seller, orderCount] = await Promise.all([
           getUserById(product.seller_id),
-          getOrderCountByProductId(product._id)
+          getOrderCountByProductId(product._id.toString())
         ]);
 
         return {

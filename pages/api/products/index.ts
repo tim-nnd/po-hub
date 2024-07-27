@@ -1,10 +1,9 @@
-import dbConnect from '@/lib/dbConnect';
-import { getFirebaseAdminApp } from '@/lib/getFirebaseAdminApp';
-import { createProduct } from '@/lib/products';
+import { getOrderCountByProductId } from '@/lib/orders';
+import { createProduct, getProductById } from '@/lib/products';
+import { getUserById, getUserUidFromCookies } from '@/lib/users';
 import { IProduct, IProductVariation, Product } from '@/model/Product';
 import CreateProductRequest from '@/model/spec/CreateProductRequest';
-import Cookies from 'cookies';
-import { getAuth } from 'firebase-admin/auth';
+import { GetProductResponse, ProductVariation } from '@/model/spec/GetProductResponse';
 import { nanoid } from 'nanoid';
 
 export default async function handler(req: any, res: any) {
@@ -13,16 +12,74 @@ export default async function handler(req: any, res: any) {
   switch (method) {
     case 'POST':
       return postProduct(req, res);
+    case 'GET':
+      return getProduct(req, res);
     default:
       res.setHeader('Allow', ['GET', 'POST']);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
 
+const getProduct = async (req: any, res: any) => {
+  const { product_id } = req.query;
+
+  try {
+    const product: IProduct | null = await getProductById(product_id);
+
+    if (!product) {
+      return res.status(404).json({ message: 'Product not found!' })
+    }
+    
+    const [seller, orderCount] = await Promise.all([
+      getUserById(product.seller_id),
+      getOrderCountByProductId(product._id.toString())
+    ]);
+    if (!seller) {
+      return res.status(404).json({ message: 'Seller not found!' })
+    }
+
+    const resp = {
+      id: product?._id.toString(),
+      name: product?.name,
+      description: product?.description,
+      image_url: product?.image_url,
+      state: product?.state,
+      closed_at: product?.closed_at,
+      available_at: product?.available_at,
+      min_order: product?.min_order,
+      max_order: product?.max_order,
+      seller: {
+        id: product?.seller_id,
+        name: seller.username,
+      },
+      variations: product.variations.map(variation => {
+        return {
+          variation_id: variation.id,
+          name: variation.name,
+          image_url: variation.image_url,
+          price: variation.price,
+        } as ProductVariation
+      }),
+      order_count: orderCount,
+    } as GetProductResponse;
+
+
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: 'Internal error' });
+  }
+}
 
 const postProduct = async (req: any, res: any) => {
-  await dbConnect();
   const validatedProduct = CreateProductRequest.parse(req.body);
+
+  let userId
+  try {
+    userId = await getUserUidFromCookies(req, res);
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ message: 'Internal error' });
+  }
 
   const product = {
     name: validatedProduct?.name,
@@ -33,10 +90,10 @@ const postProduct = async (req: any, res: any) => {
     available_at: validatedProduct?.available_at.toISOString(),
     min_order: validatedProduct?.min_order,
     max_order: validatedProduct?.max_order,
-    seller_id: '',
+    seller_id: userId,
     variations: validatedProduct?.variations.map(variation => {
       return {
-        id: nanoid(), // Provide based on your business logic
+        id: nanoid(),
         name: variation?.name,
         price: variation?.price,
         image_url: variation?.image_url
@@ -45,22 +102,7 @@ const postProduct = async (req: any, res: any) => {
   } as IProduct;
 
   try {
-    const auth = getAuth(getFirebaseAdminApp());
-    const cookies = new Cookies(req, res);
-    const token = cookies.get('token');
-
-    if (!token) {
-      throw new Error("No Token")
-    }
-
-    const idToken = await auth.verifyIdToken(token);
-
-    if (!idToken) {
-      throw new Error("Invalid Token")
-    }
-
-    product.seller_id = idToken.uid;
-    createProduct(product)
+    await createProduct(product);
     return res.status(200).json({ status: 'success', message: 'Product has been added' });
   } catch (error) {
     console.log(error)
