@@ -8,6 +8,8 @@
       },
       "allowSyntheticDefaultImports": true,
       "strict": true,
+      "lib": ["dom", "es6"],
+      "allowJs": true,
       "esModuleInterop": true,
       "moduleResolution": "node",
       "resolveJsonModule": true
