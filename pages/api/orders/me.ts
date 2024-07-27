@@ -1,6 +1,6 @@
 import dbConnect from "@/lib/dbConnect";
 import { IOrder, Order } from "@/model/Order";
-import GetOrderMeResponse from "@/model/spec/GetOrderMeResponse";
+import GetOrderMeResponse, { OrderProductDetail, OrderProductDetailVariation } from "@/model/spec/GetOrderMeResponse";
 
 
 const getOrdersByUserId = async (userId: string, page: number, limit: number) => {
@@ -34,7 +34,31 @@ export default async function handler(req: any, res: any) {
           buyer_id: order.buyer_id,
           state: order.state,
           created_at: order.created_at,
-          product_detail: order.product_detail,
+          product_detail: {
+            product_id: order.product_detail.product_id,
+            name: order.product_detail.name,
+            description: order.product_detail.description,
+            image_url: order.product_detail.image_url,
+            state: order.product_detail.state,
+            closed_at: order.product_detail.closed_at,
+            available_at: order.product_detail.available_at,
+            min_order: order.product_detail.min_order,
+            max_order: order.product_detail.max_order,
+            seller_id: order.product_detail.seller_id,
+            variations: order.product_detail.variations.map(variation => {
+              return {
+                variation_id: variation.variation_id,
+                name: variation.name,
+                image_url: variation.image_url,
+                amount: variation.amount,
+                price: variation.price,
+                total_price: variation.total_price,
+              } as OrderProductDetailVariation
+            }),
+            deleted_at: order.product_detail.deleted_at,
+            created_at: order.product_detail.created_at,
+            updated_at: order.product_detail.updated_at,
+          } as OrderProductDetail,
         } as GetOrderMeResponse;
       });
 
