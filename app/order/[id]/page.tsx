@@ -24,7 +24,7 @@ export default function Detail({ params }: { params: { id: string } }) {
         const data = await res.data;
         setLoading(false);
         setOrder(data);
-        calculateLines(data.description);
+        calculateLines(data.product_detail.description);
       } catch (error) {
         setLoading(false);
       }
