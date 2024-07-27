@@ -24,7 +24,7 @@ export default async function handler(req: any, res: any) {
       return res.status(404).json({ message: 'Orders not found' });
     }
     
-    const resp = orders.map(async order => {
+    const ordersResponse = orders.map(async order => {
 
       const [orderCount] = await Promise.all([
         getOrderCountByProductId(order.product_detail.product_id)
@@ -64,7 +64,7 @@ export default async function handler(req: any, res: any) {
         } as GetOrderMeResponse;
       });
 
-    // const resp = await Promise.all(productsResponse);
+    const resp = await Promise.all(ordersResponse);
     return res.status(200).json(resp);
 
   } catch (error) {

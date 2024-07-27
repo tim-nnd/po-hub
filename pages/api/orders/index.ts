@@ -22,8 +22,8 @@ export default async function handler(req: any, res: any) {
   
 
 const getOrder = async (req: any, res: any) => {
-  const { orderId } = req.query;
-  if (orderId == "") {
+  const { order_id } = req.query;
+  if (order_id == "") {
     return res.status(400).json({ message: 'Invalid order_id' })
   }
 
@@ -35,7 +35,7 @@ const getOrder = async (req: any, res: any) => {
     return res.status(500).json({ message: 'Internal error' });
   }
 
-  const order: IOrder | null = await getOrderById(orderId, userId);
+  const order: IOrder | null = await getOrderById(order_id, userId);
   if (!order) {
     return res.status(404).json({ message: "Order not found!" })
   }
@@ -48,10 +48,25 @@ const getOrder = async (req: any, res: any) => {
     return res.status(404).json({ message: "Product not found!" })
   }
 
+  let orderState = "Ordered";
+  switch (order.state) {
+    case "BOOKED":
+      orderState = "Ordered"
+      break;
+    case "CANCELLED_BY_SELLER":
+      orderState = "Cancelled by seller"
+      break;
+    case "COMPLETED":
+      orderState = "Completed"
+  
+    default:
+      break;
+  }
+
   const resp = {
     id: order._id,
     buyer_id: order.buyer_id,
-    state: order.state,
+    state: orderState,
     total_price: order.total_price,
     product_detail: {
       product_id: product._id,
