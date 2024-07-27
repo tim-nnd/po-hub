@@ -1,4 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
+import { getOrderCountByProductId } from "@/lib/orders";
 import { getUserById } from "@/lib/users";
 import { IProduct, Product } from "@/model/Product";
 import { IUser, User } from "@/model/User";
@@ -28,7 +29,10 @@ export default async function handler(req: any, res: any) {
     
     const productsResponse = products.map(async product => {
 
-        const seller: IUser | null = await getUserById(product.seller_id)
+      const [seller, orderCount] = await Promise.all([
+        getUserById(product.seller_id),
+        getOrderCountByProductId(product._id)
+      ]);
 
         return {
           id: product._id,
@@ -44,7 +48,7 @@ export default async function handler(req: any, res: any) {
             id: seller?._id,
             name: seller?.username,
           },
-          order_count: -1 // TODO: add order count
+          order_count: orderCount,
         }
       });
 
