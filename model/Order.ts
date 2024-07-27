@@ -2,11 +2,12 @@ import { model, Model, models } from "mongoose";
 import OrderSchema from "./schema/OrderSchema";
 
 export interface IProductDetailVariation {
-  id: string,
+  variation_id: string,
   name: string,
   image_url: string,
   amount: number,
   price: number,
+  total_price: number,
 }
 
 export interface IProductDetail {
@@ -30,6 +31,7 @@ export interface IOrder {
   _id: string,
   buyer_id: string,
   state: string,
+  total_price: number,
   product_detail: IProductDetail,
   deleted_at: string,
   created_at: string,
