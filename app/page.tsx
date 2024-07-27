@@ -20,7 +20,9 @@ export default function Home() {
   }, []);
 
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between px-4">
+    <main className="p-4">
+      <h1 className="text-4xl font-bold mb-2">PreOrdr</h1>
+      <hr className="mb-6" />
       <div className = "w-full">
         {products.map((product, index) => (
           <HomeListItem
