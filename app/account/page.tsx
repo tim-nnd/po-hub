@@ -30,7 +30,9 @@ export default function AccountPage() {
 
 
   return (
-    <div>
+    <main className="p-4">
+      <h1 className="text-4xl font-bold mb-2">Account</h1>
+      <hr className="mb-6" />
       <div className="flex flex-col px-4 pl-8 pt-10 text-center">
         <div className="mx-auto mb-8">
           <div className="w-20 h-20 border rounded-full flex justify-center items-center">
@@ -53,6 +55,6 @@ export default function AccountPage() {
           </Button>
         </div>
       </div>
-    </div>
+    </main>
   )
 }
