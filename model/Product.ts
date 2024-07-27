@@ -6,7 +6,6 @@ export interface IProductVariation {
   name: string,
   price: number,
   image_url: string,
-  book_pixels: string
 }
 
 export interface IProduct {
