@@ -14,6 +14,8 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [price, setPrice] = useState(0);
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(true);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const [hasMore, setHasMore] = useState(false);
 
   useEffect(() => {
     const fetchOrder = async () => {
@@ -22,6 +24,7 @@ export default function Detail({ params }: { params: { id: string } }) {
         const data = await res.data;
         setLoading(false);
         setOrder(data);
+        calculateLines(data.description);
       } catch (error) {
         setLoading(false);
       }
@@ -29,6 +32,13 @@ export default function Detail({ params }: { params: { id: string } }) {
 
     fetchOrder();
   }, []);
+
+  const calculateLines = (content: string) => {
+    const lineHeight = parseFloat(getComputedStyle(document.documentElement).fontSize) * 1.5;
+    const lines = content.split("\n").reduce((totalLines, para) => 
+        totalLines + Math.ceil(para.length * parseFloat(getComputedStyle(document.documentElement).fontSize) / (20 * lineHeight)), 0);
+    setHasMore(lines > 5);
+  };
 
   useEffect(() => {
     setTotalPrice(price * orderAmount)
@@ -106,7 +116,13 @@ export default function Detail({ params }: { params: { id: string } }) {
         } */}
         <section className="mt-10">
           <h3 className="text-2xl font-bold mb-4">About the PreOrder</h3>
-          <p className="text-lg mb-4">{order.product_detail?.description}</p>
+          <p className={`text-lg whitespace-pre-line ${isExpanded ? "" : "line-clamp-5 overflow-hidden"}`}>{order.product_detail.description}</p>
+          <button 
+                onClick={() => setIsExpanded(!isExpanded)} 
+                className={`mt-2 px-4 py-1 bg-black border-white border text-white font-medium rounded-lg shadow-md hover:bg-white hover:text-black hover:border-black ${!hasMore ? 'hidden' : ''}`}
+            >
+                {isExpanded ? "Read Less ▲" : "Read More ▼"}
+            </button>  
         </section>
       </div>
     </div>

@@ -29,7 +29,7 @@ export const OrderListItem: React.FC<OrderListItemProps> = ({ id = '', title = '
           />
           <div className="flex-1 pl-3 w-2/3">
             <h1 className="font-bold text-xl">{title}</h1>
-            <p className="mb-2 text-m">{subtitle}</p>
+            <p className="mb-2 text-xs whitespace-pre-line truncate h-24">{subtitle}</p>
             <div className="relative pt-1">
               <div className="flex mb-2 items-center justify-between">
                 <div>

@@ -28,8 +28,8 @@ export default async function handler(req: any, res: any) {
 
     const productsResponse = products.map(async product => {
 
-      const [seller, orderCount] = await Promise.all([
-        getUserById(product.seller_id),
+      const [orderCount] = await Promise.all([
+        // getUserById(product.seller_id),
         getOrderCountByProductId(product._id.toString())
       ]);
 
@@ -44,8 +44,7 @@ export default async function handler(req: any, res: any) {
         min_order: product.min_order,
         max_order: product.max_order,
         seller: {
-          id: seller?._id,
-          name: seller?.username,
+          id: product.seller_id,
         },
         order_count: orderCount,
       } as GetProductFeedItem;
