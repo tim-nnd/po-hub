@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'outline' | 'solid';
+  variant?: 'primary' | 'secondary';
 }
 
 export const Button: React.FC<ButtonProps> = ({ variant = 'solid', className, children, ...props }) => {
@@ -11,8 +11,8 @@ export const Button: React.FC<ButtonProps> = ({ variant = 'solid', className, ch
       className={classNames(
         'px-4 py-2 rounded-md',
         {
-          'border border-gray-300': variant === 'outline',
-          'bg-blue-500 text-white': variant === 'solid',
+          'button-primary': variant === 'primary',
+          'button-secondary': variant === 'secondary',
         },
         className
       )}
