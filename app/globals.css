@@ -107,7 +107,6 @@ input, textarea {
   transition: border-color 0.3s;
 }
 
-
 input:focus {
   border-color: rgb(var(--input-focus-border-rgb));
   outline: none;
@@ -142,6 +141,11 @@ input[type=number] {
 
 .progress-bar-value {
   background-color: rgb(var(--progress-bar-rgb));
+}
+
+.tag {
+  background-color: rgb(var(--button-primary-background-rgb));
+  color: rgb(var(--button-primary-foreground-rgb));
 }
 
 @layer utilities {
