@@ -1,7 +1,9 @@
+import { Button } from "@/components/ui/Button";
+
 export default function Component() {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen p-4 rounded-lg">
-        <h1 className="mb-8 text-3xl font-bold">POHub</h1>
+        <h1 className="mb-8 text-3xl font-bold">PreOrdr</h1>
         <div className="text-center">
           <h2 className="mb-2 text-xl font-bold">
             Hi, <span className="text-secondary">&lt;username&gt;</span>!
@@ -21,9 +23,9 @@ export default function Component() {
             />
           </div>
           <p className="mb-8 text-sm text-secondary">this will be used for others to contact you</p>
-          <button className="w-full px-4 py-2 font-semibold text-white button-primary rounded-md">
+          <Button variant="primary" className="w-full px-4 py-2">
             Complete Profile
-          </button>
+          </Button>
         </div>
       </div>
     )
