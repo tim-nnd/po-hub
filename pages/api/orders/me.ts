@@ -1,5 +1,4 @@
 import dbConnect from "@/lib/dbConnect";
-import getUserById from "@/lib/user";
 import { IOrder, Order } from "@/model/Order";
 import GetOrderMeResponse from "@/model/spec/GetOrderMeResponse";
 

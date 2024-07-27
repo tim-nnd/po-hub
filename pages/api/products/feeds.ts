@@ -1,5 +1,5 @@
 import dbConnect from "@/lib/dbConnect";
-import getUserById from "@/lib/user";
+import getUserById from "@/lib/users";
 import { IProduct, Product } from "@/model/Product";
 import { IUser, User } from "@/model/User";
 
