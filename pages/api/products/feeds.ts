@@ -1,7 +1,7 @@
 import dbConnect from "@/lib/dbConnect";
+import { getOrderCountByProductId } from "@/lib/orders";
 import { getUserById } from "@/lib/users";
 import { IProduct, Product } from "@/model/Product";
-import { IUser, User } from "@/model/User";
 
 const getProducts = async (page: number, limit: number) => {
   await dbConnect();
@@ -22,49 +22,6 @@ export default async function handler(req: any, res: any) {
     // for now let's not use JWT so people can see
     
     try {
-  
-      // products.concat([
-      //   {
-      //       "id": "1",
-      //       "name": "Product 1",
-      //       "description": "Description of Product 1",
-      //       "image_url": "http://example.com/image1.jpg",
-      //       "state": "AVAILABLE",
-      //       "close_order_date": new Date("2023-12-31T23:59:59Z"),
-      //       "available_order_date": new Date("2023-12-31T23:59:59Z"),
-      //       "min_order": 1,
-      //       "max_order": 100,
-      //       "seller_id": "123",
-      //       "product_order_count": 15
-      //   },
-      //   {
-      //       "id": "2",
-      //       "name": "Product 2",
-      //       "description": "Description of Product 2",
-      //       "image_url": "http://example.com/image2.jpg",
-      //       "state": "SOLD_OUT",
-      //       "close_order_date": new Date("2023-11-30T23:59:59Z"),
-      //       "available_order_date": new Date("2023-11-30T23:59:59Z"),
-      //       "min_order": 1,
-      //       "max_order": 50,
-      //       "seller_id": "456",
-      //       "product_order_count": 50
-      //   },
-      //   {
-      //       "id": "3",
-      //       "name": "Product 3",
-      //       "description": "Description of Product 3",
-      //       "image_url": "http://example.com/image3.jpg",
-      //       "state": "AVAILABLE",
-      //       "close_order_date": new Date("2023-10-31T23:59:59Z"),
-      //       "available_order_date": new Date("2023-10-31T23:59:59Z"),
-      //       "min_order": 1,
-      //       "max_order": 200,
-      //       "seller_id": "789",
-      //       "product_order_count": 100
-      //   }
-      // ])
-
       const products: IProduct[] | null = await getProducts(page, limit);
       if (!products) {
         return res.status(404).json({ message: 'Products not found' });
@@ -72,7 +29,10 @@ export default async function handler(req: any, res: any) {
   
       const productsResponse = products.map(async product => {
 
-        const seller: IUser | null = await getUserById(product.seller_id)
+        const [seller, orderCount] = await Promise.all([
+          getUserById(product.seller_id),
+          getOrderCountByProductId(product._id)
+        ]);
 
         return {
           id: product._id,
@@ -88,7 +48,7 @@ export default async function handler(req: any, res: any) {
             id: seller?._id,
             name: seller?.username,
           },
-          order_count: -1 // TODO: add order count
+          order_count: orderCount,
         }
       });
 
