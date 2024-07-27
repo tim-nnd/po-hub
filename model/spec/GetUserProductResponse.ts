@@ -1,4 +1,4 @@
-interface GetUserProductRequest {
+interface GetUserProductResponse {
   id: string,
   name: string,
   description: string,
@@ -15,4 +15,4 @@ interface GetUserProductRequest {
   order_count: number
 }
 
-export default GetUserProductRequest;
+export default GetUserProductResponse;
