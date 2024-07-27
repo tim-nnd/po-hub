@@ -1,0 +1,17 @@
+{
+    "compilerOptions": {
+      "target": "esnext",
+      "module": "esnext",
+      "baseUrl": ".",
+      "paths": {
+        "@/*": ["./*"]
+      },
+      "allowSyntheticDefaultImports": true,
+      "strict": true,
+      "esModuleInterop": true,
+      "moduleResolution": "node",
+      "resolveJsonModule": true
+    },
+    "exclude": ["node_modules", ".next"]
+  }
+  
