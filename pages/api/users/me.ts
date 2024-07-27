@@ -1,15 +1,13 @@
-// pages/api/users/me.js
 import dbConnect from '@/lib/dbConnect';
+import { getFirebaseAdminApp } from '@/lib/getFirebaseAdminApp';
 import GetUserResponse from '@/model/spec/GetUserResponse';
 import { IUser, User } from '@/model/User';
-import jwt, { JwtPayload, Secret } from 'jsonwebtoken';
-// import { getUserById } from '@lib/db'; // Import your database function
-
-const JWT_SECRET = process.env.JWT_SECRET as Secret; // Make sure to set this in your environment variables
+import Cookies from 'cookies';
+import { getAuth } from 'firebase-admin/auth';
 
 const getUserById = async (userId: string) => {
   await dbConnect();
-  return await User.findOne({_id: userId}).lean();
+  return await User.findOne({ _id: userId }).lean();
 }
 
 export default async function handler(req: any, res: any) {
@@ -18,19 +16,22 @@ export default async function handler(req: any, res: any) {
     return res.status(405).end(`Method ${req.method} Not Allowed`);
   }
 
-  // const authHeader = req.headers.authorization;
-
-  // if (!authHeader || !authHeader.startsWith('Bearer ')) {
-  //   return res.status(401).json({ message: 'No token provided' });
-  // }
-
-  // const token = authHeader.split(' ')[1];
-
   try {
-    // const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload;
-    const userId = "test";
+    const auth = getAuth(getFirebaseAdminApp());
+    const cookies = new Cookies(req, res);
+    const token = cookies.get('token');
 
-    const user: IUser | null = await getUserById(userId); // Fetch user data from your database
+    if (!token) {
+      throw new Error("No Token")
+    }
+
+    const idToken = await auth.verifyIdToken(token);
+
+    if (!idToken) {
+      throw new Error("Invalid Token")
+    }
+
+    const user: IUser | null = await getUserById(idToken.uid); // Fetch user data from your database
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }

@@ -5,15 +5,19 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import nookies from 'nookies';
 import { getFirebaseClientApp } from "@/lib/getFirebaseClientApp";
 import useInterval from "@/hooks/useInterval";
+import { IUser } from "@/model/User";
+import axios from "axios";
 
-const AuthContext = createContext<{ user: User | null, setUser: any, triggerUpdateUser: any }>({
+const AuthContext = createContext<{ user: User | null, setUser: any, triggerUpdateUser: any, appUser: IUser | null }>({
   user: null,
   setUser: null,
-  triggerUpdateUser: null
+  triggerUpdateUser: null,
+  appUser: null
 });
 
 export function AuthProvider({ children }: any) {
   const [user, setUser] = useState<User | null>(null);
+  const [appUser, setAppUser] = useState<IUser | null>(null);
   const [firstLoad, setFirstLoad] = useState(true);
 
   const triggerUpdateUser = () => {
@@ -30,6 +34,8 @@ export function AuthProvider({ children }: any) {
         const token = await user.getIdToken();
         setUser(user);
         nookies.set(undefined, 'token', token, { path: '/' });
+        const result: IUser = (await axios.get(`/api/users/me`)).data;
+        setAppUser(result);
       }
     })
   }, []);
@@ -42,7 +48,7 @@ export function AuthProvider({ children }: any) {
   }, 10 * 60 * 1000);
 
   return (
-    <AuthContext.Provider value={useMemo(() => ({ user, setUser, triggerUpdateUser }), [user, setUser, triggerUpdateUser])}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={useMemo(() => ({ user, setUser, triggerUpdateUser, appUser }), [user, setUser, triggerUpdateUser, appUser])}>{children}</AuthContext.Provider>
   )
 }
 
