@@ -23,10 +23,10 @@
   --input-focus-border-rgb: 75, 85, 99;
   --input-hover-border-rgb: 0, 0, 0;
 
-  --progress-bar-bg-rgb: 180, 180, 180;
+  --progress-bar-bg-rgb: 210, 250, 225;
   --progress-bar-min-outline-rgb: 30, 30, 30;
-  --progress-bar-shadow-rgb: 130, 130, 130;
-  --progress-bar-rgb: 90, 90, 90;
+  --progress-bar-shadow-rgb: 184, 245, 196;
+  --progress-bar-rgb: 0, 180, 80;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -51,10 +51,10 @@
     --input-focus-border-rgb: 107, 114, 128;
     --input-hover-border-rgb: 255, 255, 255;
 
-    --progress-bar-bg-rgb: 30, 30, 30;
+    --progress-bar-bg-rgb: 0, 30, 18;
     --progress-bar-min-outline-rgb: 200, 200, 200;
-    --progress-bar-shadow-rgb: 90, 90, 90;
-    --progress-bar-rgb: 160, 160, 160;
+    --progress-bar-shadow-rgb: 0, 89, 40;
+    --progress-bar-rgb: 0, 180, 80;
   }
 }
 

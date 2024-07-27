@@ -38,14 +38,15 @@ export default function Home() {
         <SpinnerIcon />
       ) : (
         <div className="w-full">
-          {(!orders || orders.length == 0) && <div>There are no orders</div>}
-          {!!orders && orders.length > 0 && orders.map((order, index) => (
+          {orders.map((order, index) => (
             <OrderListItem
               key={index}
               id={order.id}
               title={order.product_detail.name}
               subtitle={order.product_detail.description}
-              progress={Math.floor((order.product_detail.order_count / order.product_detail.max_order) * 100)}
+              min = {order.product_detail.min_order}
+              max = {order.product_detail.max_order}
+              currentValue = {order.product_detail.order_count}
               image={order.product_detail.image_url}
             />
           ))}

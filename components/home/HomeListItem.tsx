@@ -14,7 +14,7 @@ interface HomeListItemProps {
   className?: string;
 };
 
-export const HomeListItem: React.FC<HomeListItemProps> = ({ id = '', title = 'Title', subtitle = 'lorem ipsum dolor sit amet', min = 0, max = 1, currentValue = 0, image, className, ...props }) => {
+export const HomeListItem: React.FC<HomeListItemProps> = ({ id = '', title = 'Title', subtitle = 'lorem ipsum dolor sit amet', min, max, currentValue, image, className, ...props }) => {
   return (
     <Link href="/product/[id]" as={`/product/${id}`}>
       <div

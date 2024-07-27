@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/Button";
 import { GetOrderDetailResponse } from '@/model/spec/GetOrderDetailResponse';
+import { ProgressBar } from '@/components/ui/ProgressBar';
 import SpinnerIcon from '@/components/icon/SpinnerIcon';
 import axios from 'axios';
 
@@ -73,10 +74,12 @@ export default function Detail({ params }: { params: { id: string } }) {
         <h2 className="text-4xl font-bold mt-1 mb-4">{order.product_detail?.name}</h2>
         <p className="text-2xl font-bold">{order.product_detail?.order_count} orders</p>
         <p className="text-secondary">{text}</p>
-        <div className="relative overflow-hidden h-3 mb-4 rounded bg-blue-200">
-          <div style={{ width: `${((order.product_detail?.order_count + orderAmount) / order.product_detail?.max_order) * 100}%` }} className="absolute top-0 left-0 h-full bg-blue-300 transition-all duration-300"></div>
-          <div style={{ width: `${(order.product_detail?.order_count / order.product_detail?.max_order) * 100}%` }} className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"></div>
-        </div>
+        <ProgressBar 
+          className="h-3"
+          min={order.product_detail?.min_order}
+          max={order.product_detail?.max_order}
+          currentValue={order.product_detail?.order_count}
+        />
         <div className="flex justify-between items-center">
           <h2>{order.product_detail?.variations[0].amount} item(s) ordered</h2>
           <h3 className="text-2xl">Price: <span className="font-bold">{formatIDR(order.total_price)}</span></h3>

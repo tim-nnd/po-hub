@@ -37,20 +37,21 @@ export default function Home() {
       {!!loading ? (
         <SpinnerIcon />
       ) : (
-        <div className="w-full">
+        <div className = "w-full">
           {products.map((product, index) => (
             <HomeListItem
-              key={index}
-              id={product.id}
-              title={product.name}
-              subtitle={product.description}
-              min={product.min_order}
-              max={product.max_order}
-              currentValue={product.order_count}
-              image={product.image_url}
+              key = {index}
+              id = {product.id}
+              title = {product.name}
+              subtitle = {product.description}
+              min = {product.min_order}
+              max = {product.max_order}
+              currentValue = {product.order_count}
+              image = {product.image_url}
             />
           ))}
         </div>
-  )}
-  </main>
-)}
+      )}
+    </main>
+  );
+}
