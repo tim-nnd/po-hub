@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from 'react';
 import { Button } from "@/components/ui/Button";
 import { GetProductResponse } from '@/model/spec/GetProductDetailResponse';
+import { useAlert } from '@/components/ui/AlertProvider';
+import { useRouter } from 'next/navigation';
 
 export default function Detail({ params }: { params: { id: string } }) {
   const [orderAmount, setOrderAmount] = useState(0);
@@ -10,6 +12,9 @@ export default function Detail({ params }: { params: { id: string } }) {
   const [product, setProduct] = useState<GetProductResponse | null>(null);
   const [price, setPrice] = useState(0);
   const [text, setText] = useState("");
+
+  const { showAlert } = useAlert();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -56,6 +61,34 @@ export default function Detail({ params }: { params: { id: string } }) {
     }
   }, [product]);
 
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!product || orderAmount <= 0) return;
+
+    const res = await fetch(`/api/orders`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        product_id: product.id,
+        variations: [{
+          variation_id: product.variations[0].variation_id,
+          amount: orderAmount
+        }]
+      })
+    });
+    const data = await res.json();
+    if (res.ok) {
+      showAlert('Order success');
+      setTimeout(() => {
+        router.push('/');
+      }, 1500);
+    } else {
+      showAlert(data.message);
+    }
+  }
+
   if (!product) {
     return <div></div>;
   }
@@ -72,17 +105,19 @@ export default function Detail({ params }: { params: { id: string } }) {
           <div style={{ width: `${(product.order_count / product.max_order) * 100}%` }} className="absolute top-0 left-0 h-full bg-blue-500 transition-all duration-300"></div>
         </div>
         <h3 className="text-2xl mt-1">Price: <span className="font-bold">{formatIDR(price)}</span></h3>
-        <div className="flex items-center mb-4">
-          <p>{formatIDR(totalPrice)}</p>
-          <div className='ml-auto'>
-            <button className="py-2 px-4 text-white bg-blue-900 rounded-l-lg hover:bg-blue-700" onClick={stepDown}>-</button>
-            <input type="number" id="donationAmount" className="text-center w-16 py-2 border-t border-b border-gray-300" value={orderAmount} />
-            <button className="py-2 px-4 text-white bg-blue-900 rounded-r-lg hover:bg-blue-700" onClick={stepUp}>+</button>
+        <form onSubmit={handleSubmit}>
+          <div className="flex items-center mb-4">
+            <p>{formatIDR(totalPrice)}</p>
+            <div className='ml-auto'>
+              <button type="button" className="py-2 px-4 text-white bg-blue-900 rounded-l-lg hover:bg-blue-700" onClick={stepDown}>-</button>
+              <input type="number" id="donationAmount" className="text-center w-16 py-2 border-t border-b border-gray-300" value={orderAmount} />
+              <button type="button" className="py-2 px-4 text-white bg-blue-900 rounded-r-lg hover:bg-blue-700" onClick={stepUp}>+</button>
+            </div>
           </div>
-        </div>
-        <Button variant="primary" className="py-3">
-          Order
-        </Button>
+          <Button variant="primary" className="py-3">
+            Order
+          </Button>
+        </form>
         <section className="mt-10">
           <h3 className="text-2xl font-bold mb-4">About the PreOrder</h3>
           <p className="text-lg mb-4">{product.description}</p>
