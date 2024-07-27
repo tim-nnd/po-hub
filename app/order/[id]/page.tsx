@@ -55,9 +55,9 @@ export default function Detail({ params }: { params: { id: string } }) {
   useEffect(() => {
     if (!order) return;
     if (order.product_detail?.order_count || 0 < order.product_detail?.min_order || 0) {
-      setText(`has been ordered, needs ${order.product_detail?.min_order || 0 - order.product_detail?.order_count || 0} more to proceed`);
+      setText(`have been ordered, needs ${order.product_detail?.min_order || 0 - order.product_detail?.order_count || 0} more to proceed`);
     } else {
-      setText(`has been ordered, only ${order.product_detail?.max_order || 0 - order.product_detail?.order_count || 0} left!`);
+      setText(`have been ordered, only ${order.product_detail?.max_order || 0 - order.product_detail?.order_count || 0} left!`);
     }
   }, [order]);
 
@@ -82,7 +82,7 @@ export default function Detail({ params }: { params: { id: string } }) {
       <img src={order.product_detail?.image_url} alt="Campaign image" className="w-full" />
       <div className="flex flex-col px-4">
         <h2 className="text-4xl font-bold mt-1 mb-4">{order.product_detail?.name}</h2>
-        <p className="text-2xl font-bold">{order.product_detail?.order_count} orders</p>
+        <p className="text-2xl font-bold">{order.product_detail?.order_count} total order(s)</p>
         <p className="text-secondary">{text}</p>
         <ProgressBar 
           className="h-3"
@@ -91,7 +91,7 @@ export default function Detail({ params }: { params: { id: string } }) {
           currentValue={order.product_detail?.order_count}
         />
         <div className="flex justify-between items-center">
-          <h2>{order.product_detail?.variations[0].amount} item(s) ordered</h2>
+          <h2>You ordered {order.product_detail?.variations[0].amount} item(s)</h2>
           <h3 className="text-2xl">Price: <span className="font-bold">{formatIDR(order.total_price)}</span></h3>
         </div>
         <div className="my-4">
