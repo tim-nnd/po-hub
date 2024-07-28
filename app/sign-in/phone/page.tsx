@@ -5,8 +5,11 @@ import { useAlert } from "@/components/ui/AlertProvider";
 import axios from "axios";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { IUser } from "@/model/User";
+import { useAuth } from "@/components/ui/AuthProvider";
 
 export default function SignInPhonePage() {
+  const { setAppUser } = useAuth();
   const { showAlert } = useAlert();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
@@ -30,7 +33,9 @@ export default function SignInPhonePage() {
     e.preventDefault();
     setLoading(true);
     try {
-      await axios.put(`/api/users`, form);
+      const result: any = (await axios.put(`/api/users`, form)).data;
+      setAppUser(result.user as IUser);
+
       showAlert('Profile updated successfully!');
       setLoading(false);
       setTimeout(() => router.push('/'), 1500);
