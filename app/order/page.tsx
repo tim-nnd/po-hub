@@ -3,10 +3,10 @@
 import { useAuth } from "@/components/ui/AuthProvider";
 import { useEffect, useState } from "react";
 import GetOrderMeResponse from "@/model/spec/GetOrderMeResponse";
-import { OrderListItem } from "@/components/order/OrderListItem";
 import SpinnerIcon from "@/components/icon/SpinnerIcon";
 import axios from "axios";
 import { useAlert } from "@/components/ui/AlertProvider";
+import { ListItem } from "@/components/ui/ListItem";
 
 export default function Home() {
   const { user } = useAuth();
@@ -39,15 +39,18 @@ export default function Home() {
       ) : (
         <div className="w-full">
           {orders.map((order, index) => (
-            <OrderListItem
-              key={index}
-              id={order.id}
-              title={order.product_detail.name}
-              subtitle={order.product_detail.description}
+            <ListItem
+              key = {index}
+              id = {order.id}
+              title = {order.product_detail.name}
+              subtitle = {order.product_detail.description}
               min = {order.product_detail.min_order}
               max = {order.product_detail.max_order}
               currentValue = {order.product_detail.order_count}
-              image={order.product_detail.image_url}
+              image = {order.product_detail.image_url}
+              closed_at = {order.product_detail.closed_at}
+              href = "/order/[id]"
+              as = {`/order/${order.id}`}
             />
           ))}
         </div>

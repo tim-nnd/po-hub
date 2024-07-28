@@ -3,7 +3,7 @@ import classNames from 'classnames';
 import Link from 'next/link';
 import { ProgressBar } from "@/components/ui/ProgressBar";
 
-interface HomeListItemProps {
+interface ListItemProps {
   id: string;
   title: string;
   subtitle: string;
@@ -12,10 +12,12 @@ interface HomeListItemProps {
   currentValue: number;
   image: string;
   closed_at: string;
+  href: string;
+  as: string;
   className?: string;
 };
 
-export const HomeListItem: React.FC<HomeListItemProps> = ({ id = '', title = 'Title', subtitle = 'lorem ipsum dolor sit amet', min, max, currentValue, image, closed_at = '', className, ...props }) => {
+export const ListItem: React.FC<ListItemProps> = ({ id = '', title = 'Title', subtitle = 'lorem ipsum dolor sit amet', min, max, currentValue, image, closed_at = '', href = '', as = '', className, ...props }) => {
   const calculateRemainingDays = () => {
     const currentDate = new Date();
     const closedDate = new Date(closed_at);
@@ -25,7 +27,7 @@ export const HomeListItem: React.FC<HomeListItemProps> = ({ id = '', title = 'Ti
   }
 
   return (
-    <Link href="/product/[id]" as={`/product/${id}`}>
+    <Link href={href} as={as}>
       <div
         className={classNames('my-4', className)}
         {...props}
