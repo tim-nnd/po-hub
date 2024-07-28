@@ -4,7 +4,7 @@ import { useAlert } from "./AlertProvider";
 
 function AlertItem({ message }: any) {
   return (
-    <div className="mx-4 my-2 rounded-xl max-w-xs p-4 bg-zinc-900 text-sm font-semibold animate-rise">
+    <div className="alert mx-4 my-2 rounded-xl max-w-xs p-4 text-sm font-semibold animate-rise">
       {message}
     </div>
   )
