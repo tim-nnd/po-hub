@@ -12,12 +12,19 @@ const postUser = async (userId: string, username: string, phone_number: string) 
   if (!user) return;
 
   try {
-    await User.updateOne({
-      _id: userId,
-    }, {
+    const newFields = {
       username: username,
       phone_number: phone_number
-    });
+    };
+
+    await User.updateOne({
+      _id: userId,
+    }, newFields);
+
+    return {
+      ...user,
+      ...newFields
+    }
   } catch (error) {
     console.error(error);
   }
@@ -44,8 +51,8 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
 
       const spec = UpdateUserRequest.parse(req.body);
 
-      await postUser(idToken.uid, spec.username, spec.phone_number);
-      res.status(200).json({ success: true })
+      const user = await postUser(idToken.uid, spec.username, spec.phone_number);
+      res.status(200).json({ success: true, user: user });
     } catch (error) {
       console.log(error)
       res.status(400).json({ success: false })
