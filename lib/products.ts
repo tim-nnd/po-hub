@@ -24,3 +24,23 @@ export const cancelProduct = async (productId: string, sellerId: string) => {
         }
     })
 }
+
+export const getProductsAfterCloseTime = async (dateTime: Date) => {
+    await dbConnect();
+    return await Product.find({
+        closed_at: {
+            $lt: dateTime,
+        }
+    });
+}
+
+export const setProductToClosedState = async (productId: string) => {
+    await dbConnect();
+    return await Product.updateOne({
+        _id: productId
+    }, {
+        $set: {
+            state: 'CLOSED'
+        }
+    })
+}
