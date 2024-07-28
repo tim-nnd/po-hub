@@ -1,12 +1,12 @@
 "use client";
 
 import { useAuth } from "@/components/ui/AuthProvider";
-import { HomeListItem } from "@/components/home/HomeListItem";
 import { useEffect, useState } from "react";
 import { GetProductFeedItem } from "@/model/spec/GetProductFeedItem";
 import SpinnerIcon from "@/components/icon/SpinnerIcon";
 import axios from "axios";
 import { useAlert } from "@/components/ui/AlertProvider";
+import { ListItem } from "@/components/ui/ListItem";
 
 export default function Home() {
   const { user } = useAuth();
@@ -39,7 +39,7 @@ export default function Home() {
       ) : (
         <div className = "w-full">
           {products.map((product, index) => (
-            <HomeListItem
+            <ListItem
               key = {index}
               id = {product.id}
               title = {product.name}
@@ -49,6 +49,8 @@ export default function Home() {
               currentValue = {product.order_count}
               image = {product.image_url}
               closed_at = {product.closed_at}
+              href = "/product/[id]"
+              as = {`/product/${product.id}`}
             />
           ))}
         </div>
