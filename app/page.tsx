@@ -48,6 +48,7 @@ export default function Home() {
               max = {product.max_order}
               currentValue = {product.order_count}
               image = {product.image_url}
+              closed_at = {product.closed_at}
             />
           ))}
         </div>
